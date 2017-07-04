@@ -119,8 +119,11 @@ import axios from 'axios'
 var fields = ['EASTERN ASIA', 'SOUTH-EASTERN ASIA', 'OCEANIA', 'SOUTHERN ASIA']
 var colors = ['#3366cc', '#dc3912', '#ff9900', '#109618']
 var totaldata = []
+var totaldata1 = []
+var totaldata2 = []
 var data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
-
+var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+var data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 function drawChart1 (mydata, id) {
   var canvas = document.createElement('canvas')
   document.getElementById(id).innerHTML = ''
@@ -267,23 +270,115 @@ function readData (data, year) {
         }
       }
       drawChart1(data.total, 'asntbyparent')
-      drawChart1(data.total, 'ipv4tbyparent')
-      drawChart1(data.total, 'ipv6tbyparent')
       drawChart2(data.total, 'asnbsparent')
-      drawChart2(data.total, 'ipv4bsparent')
-      drawChart2(data.total, 'ipv6bsparent')
       var rad = document.getElementsByName('asntby')
       for (i = 0; i < rad.length; i++) {
         rad[i].onclick = function () {
           drawChart1(data[this.value], 'asntbyparent')
         }
       }
+      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
+      for (i = 0; i < zoom.length; i++) {
+        zoom[i].onclick = function () {
+          console.log(this.getAttribute('data'))
+          fullWindow(this.getAttribute('data'))
+        }
+      }
+      console.log(zoom)
+    }
+  })
+  .catch(error => {
+    console.log('error')
+    console.log(error)
+  })
+}
+function readData1 (data1, year) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv4/assigned,allocated/' + year + '/Eastern%20Asia,South-Eastern%20Asia,Oceania,Southern%20Asia?groupBy=subregion')
+  .then(response => {
+    totaldata1.push(response.data)
+    if (year < 2012) {
+      readData1(data1, year + 1)
+    } else {
+      for (var j = 0; j < fields.length; j++) {
+        data1.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data1.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data1.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data1.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+      }
+      console.log(totaldata1)
+      for (var i = 0; i < totaldata1.length; i++) {
+        for (j = 0; j < fields.length; j++) {
+          data1.total[j].data.push(totaldata1[i][fields[j]].ipv4.total)
+          data1.total[j].backgroundColor.push(colors[j])
+          data1.total[j].borderColor.push('none')
+          data1.twobyte[j].data.push(totaldata1[i][fields[j]].ipv4.twentyFourBit)
+          data1.twobyte[j].backgroundColor.push(colors[j])
+          data1.twobyte[j].borderColor.push('none')
+          data1.fourbyte[j].data.push(totaldata1[i][fields[j]].ipv4.twentyFourBit)
+          data1.fourbyte[j].backgroundColor.push(colors[j])
+          data1.fourbyte[j].borderColor.push('none')
+          data1.cumulative[j].data.push(totaldata1[i][fields[j]].ipv4.count)
+          data1.cumulative[j].backgroundColor.push(colors[j])
+          data1.cumulative[j].borderColor.push('none')
+        }
+      }
+      drawChart1(data1.total, 'ipv4tbyparent')
+      drawChart2(data1.total, 'ipv4bsparent')
       var rad1 = document.getElementsByName('ipv4tby')
       for (i = 0; i < rad1.length; i++) {
         rad1[i].onclick = function () {
           drawChart1(data.total, 'ipv4tbyparent')
         }
       }
+
+      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
+      for (i = 0; i < zoom.length; i++) {
+        zoom[i].onclick = function () {
+          console.log(this.getAttribute('data'))
+          fullWindow(this.getAttribute('data'))
+        }
+      }
+      console.log(zoom)
+    }
+  })
+  .catch(error => {
+    console.log('error')
+    console.log(error)
+  })
+}
+function readData2 (data2, year) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv6/assigned,allocated/' + year + '/Eastern%20Asia,South-Eastern%20Asia,Oceania,Southern%20Asia?groupBy=subregion')
+  .then(response => {
+    totaldata2.push(response.data)
+    if (year < 2012) {
+      readData2(data2, year + 1)
+    } else {
+      for (var j = 0; j < fields.length; j++) {
+        data2.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data2.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data2.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data2.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+      }
+      console.log(totaldata2)
+      for (var i = 0; i < totaldata2.length; i++) {
+        for (j = 0; j < fields.length; j++) {
+          data2.total[j].data.push(totaldata2[i][fields[j]].ipv6.total)
+          data2.total[j].backgroundColor.push(colors[j])
+          data2.total[j].borderColor.push('none')
+          data2.twobyte[j].data.push(totaldata2[i][fields[j]].ipv6.twentyFourBit)
+          data2.twobyte[j].backgroundColor.push(colors[j])
+          data2.twobyte[j].borderColor.push('none')
+          data2.fourbyte[j].data.push(totaldata2[i][fields[j]].ipv6.twentyFourBit)
+          data2.fourbyte[j].backgroundColor.push(colors[j])
+          data2.fourbyte[j].borderColor.push('none')
+          data2.cumulative[j].data.push(totaldata2[i][fields[j]].ipv6.count)
+          data2.cumulative[j].backgroundColor.push(colors[j])
+          data2.cumulative[j].borderColor.push('none')
+        }
+      }
+      drawChart1(data2.total, 'ipv6tbyparent')
+      drawChart2(data2.total, 'ipv6bsparent')
+
       var rad2 = document.getElementsByName('ipv6tby')
       for (i = 0; i < rad2.length; i++) {
         rad2[i].onclick = function () {
@@ -305,7 +400,6 @@ function readData (data, year) {
     console.log(error)
   })
 }
-
 export default {
   data () {
     return {
@@ -332,9 +426,12 @@ export default {
   mounted () {
     this.$nextTick(() => {
       readData(data, 2008)
+      readData1(data1, 2008)
+      readData2(data2, 2008)
     })
   }
 }
+
 </script>
 <style>
 .fullwindow {

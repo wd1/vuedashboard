@@ -2,11 +2,11 @@
   <!-- Main content -->
   <section class="content">
     <div id="routename" class="objecthidden">{{$route.meta[$route.meta.length-1].message}}</div>
-    <div id="routename1" class="objecthidden">{{$route.name}}</div>
+    <div id="routename1" class="objecthidden">{{$route.name.replace("%27","'")}}</div>
     <div class="col-sm-12 col-xs-12"></div>
-    <div id="asntbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="asntbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="height:100%;">
       <div id="asntbybox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 371px;">
+    border: 1px solid black;    min-height: 300px;height: 100%;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
           <h3 class="box-title" style="font-weight: bold;" >ASN 4 Total by Year</h3>
           <div style="float:right;font-size: 12px;">
@@ -20,27 +20,15 @@
               <input type="radio" name="asntby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="asntbyparent" class="box-body" style="    min-height: 300px;height: 371px;">            
+          <div id="asntbyparent" class="box-body" style="    min-height: 300px;height: 100%;">
+              
           </div>
         </div>
       </div>
     </div>
-    <div id="asnbscontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
-      <div id="asnbsbox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 371px;">
-        <div class="box-header with-border" style="text-align: center;height: 100%;">
-          <h3 class="box-title" style="font-weight: bold;" >ASN by Economy</h3>
-          <div style="float:right;font-size: 12px;">
-            <span class="fullview-toggle fa fa-expand" data='asnbs'></span>
-          </div>
-          <div  id="asnbsparent" class="box-body" style="    min-height: 300px;height: 371px;">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="ipv4tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="ipv4tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="height:100%;">
       <div id="ipv4tbybox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 371px;">
+    border: 1px solid black;    min-height: 300px;height: 100%;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
           <h3 class="box-title" style="font-weight: bold;" >IPv4 Total by Year</h3>
           <div style="float:right;font-size: 12px;">
@@ -54,28 +42,15 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div id="ipv4tbyparent" class="box-body" style="    min-height: 300px;height: 100%;">
               
           </div>
         </div>
       </div>
     </div>
-    <div id="ipv4bscontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
-      <div id="ipv4bsbox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 371px;">
-        <div class="box-header with-border" style="text-align: center;height: 100%;">
-          <h3 class="box-title" style="font-weight: bold;" >IPv4 by Economy</h3>
-          <div style="float:right;font-size: 12px;">
-            <span class="fullview-toggle fa fa-expand" data='ipv4bs'></span>
-          </div>
-          <div  id="ipv4bsparent" class="box-body" style="    min-height: 300px;height: 371px;">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="ipv6tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="ipv6tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="height:100%;">
       <div id="ipv6tbybox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 371px;">
+    border: 1px solid black;    min-height: 300px;height: 100%;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
           <h3 class="box-title" style="font-weight: bold;" >IPv6/32 by Year</h3>
           <div style="float:right;font-size: 12px;">
@@ -85,25 +60,12 @@
             <input type="radio" name="ipv6tby" value="total" checked="checked"> /32
             <input type="radio" name="ipv6tby" value="twobyte" > /48
             <input type="radio" name="ipv6tby" value="fourbyte" > delegation
-            <div style="display: inline;float: right;">
+            <div style="display: inline; float: right;">
               <input type="radio" name="ipv6tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv6tbyparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div id="ipv6tbyparent" class="box-body" style="    min-height: 300px;height: 100%;">
               
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="ipv6bscontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
-      <div id="ipv6bsbox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 371px;">
-        <div class="box-header with-border" style="text-align: center;height: 100%;">
-          <h3 class="box-title" style="font-weight: bold;" >IPv6 by Economy (/32)</h3>
-          <div style="float:right;font-size: 12px;">
-            <span class="fullview-toggle fa fa-expand" data='ipv6bs'></span>
-          </div>
-          <div  id="ipv6bsparent" class="box-body" style="    min-height: 300px;height: 371px;">
           </div>
         </div>
       </div>
@@ -113,11 +75,7 @@
   </section>
   <!-- /.content -->
 </template>
-
 <script>
-import Chart from 'chart.js'
-import axios from 'axios'
-
 var list = [
   {
     id: 'all',
@@ -435,6 +393,10 @@ var list = [
     ]
   }
 ]
+console.log(list)
+import Chart from 'chart.js'
+import axios from 'axios'
+
 var fields = []
 var totaldata = []
 var totaldata1 = []
@@ -494,6 +456,18 @@ function drawChart1 (mydata, id) {
   new Chart(ctx, config) // eslint-disable-line no-new
 }
 var fullwindowflag = true
+
+function fitHeight () {
+  var maincontainer = document.getElementById('asntbycontainer')
+  maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
+  var height = 800
+  document.getElementById('asntbyparent').style.height = height + 'px'
+  document.getElementById('asntbybox').style.height = height + 'px'
+  document.getElementById('ipv4tbyparent').style.height = height + 'px'
+  document.getElementById('ipv4tbybox').style.height = height + 'px'
+  document.getElementById('ipv6tbyparent').style.height = height + 'px'
+  document.getElementById('ipv6tbybox').style.height = height + 'px'
+}
 function fullWindow (id) {
   var container = document.getElementsByClassName('chart_container')
   var maincontainer = document.getElementById(id + 'container')
@@ -501,84 +475,36 @@ function fullWindow (id) {
     for (var i = 0; i < container.length; i++) {
       container[i].style.display = 'none'
     }
+    console.log(maincontainer.parentNode.parentNode.offsetHeight)
     maincontainer.style.display = 'block'
     maincontainer.className += ' fullwindow'
     document.getElementById(id + 'parent').style.height = '100%'
     document.getElementById(id + 'box').style.height = '100%'
   } else {
     maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
-    document.getElementById(id + 'parent').style.height = '371px'
-    document.getElementById(id + 'box').style.height = '371px'
+    fitHeight()
     for (i = 0; i < container.length; i++) {
       container[i].style.display = 'block'
     }
   }
   fullwindowflag = !fullwindowflag
 }
-function drawChart2 (data1, id) {
-  var canvas = document.createElement('canvas')
-  document.getElementById(id).innerHTML = ''
-  document.getElementById(id).appendChild(canvas)
-  var piedata = []
-  for (var i = 0; i < data1.length; i++) {
-    var sum = 0
-    for (var j = 0; j < data1[i].data.length; j++) {
-      sum = sum + data1[i].data[j]
-    }
-    piedata.push(sum)
-  }
-  var labels = []
-  var colors = []
-  for (i = 0; i < fields.length; i++) {
-    labels[i] = fields[i].label
-    colors[i] = fields[i].color
-  }
-  var ctx = canvas.getContext('2d')
-  var config = {
-    type: 'pie',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'CoPilot',
-        backgroundColor: colors,
-        data: piedata
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: !(window.innerWidth <= 800 && window.innerHeight <= 600),
-      legend: {
-        position: 'bottom',
-        display: false
-      },
-      tooltips: {
-        mode: 'label',
-        xPadding: 10,
-        yPadding: 10,
-        bodySpacing: 10
-      }
-    }
-  }
-  new Chart(ctx, config) // eslint-disable-line no-new
-}
+
 function readData (data, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/asn/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/asn/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
   .then(response => {
-    for (var i = 0; i < Object.keys(response.data).length; i++) {
-      var obj = {'label': Object.keys(response.data)[i], color: ''}
-      for (var y = 0; y < list.length; y++) {
-        if (list[y].id === document.getElementById('routename1').innerHTML.toLowerCase()) {
-          for (var x = 0; x < list[y].countries.length; x++) {
-            if (list[y].countries[x].id === Object.keys(response.data)[i]) {
-              obj.color = list[y].countries[x].color
-              fields[i] = obj
-            }
+    totaldata.push(response.data)
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === document.getElementById('routename').innerHTML.toLowerCase()) {
+        for (var x = 0; x < list[i].countries.length; x++) {
+          if (list[i].countries[x].label === document.getElementById('routename1').innerHTML) {
+            var obj = {'label': list[i].countries[x].id, color: list[i].countries[x].color}
+            fields[0] = obj
           }
-          break
         }
       }
     }
-    totaldata.push(response.data)
+    console.log(fields)
     if (year < 2012) {
       readData(data, year + 1)
     } else {
@@ -588,6 +514,7 @@ function readData (data, year) {
         data.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
         data.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
       }
+      console.log(totaldata)
       for (i = 0; i < totaldata.length; i++) {
         for (j = 0; j < fields.length; j++) {
           data.total[j].data.push(totaldata[i][fields[j].label].asn.total)
@@ -605,7 +532,6 @@ function readData (data, year) {
         }
       }
       drawChart1(data.total, 'asntbyparent')
-      drawChart2(data.total, 'asnbsparent')
       var rad = document.getElementsByName('asntby')
       for (i = 0; i < rad.length; i++) {
         rad[i].onclick = function () {
@@ -615,9 +541,11 @@ function readData (data, year) {
       var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
+          console.log(this.getAttribute('data'))
           fullWindow(this.getAttribute('data'))
         }
       }
+      console.log(zoom)
     }
   })
   .catch(error => {
@@ -626,7 +554,7 @@ function readData (data, year) {
   })
 }
 function readData1 (data1, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv4/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv4/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
   .then(response => {
     totaldata1.push(response.data)
     if (year < 2012) {
@@ -638,6 +566,7 @@ function readData1 (data1, year) {
         data1.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
         data1.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
       }
+      console.log(totaldata1)
       for (var i = 0; i < totaldata1.length; i++) {
         for (j = 0; j < fields.length; j++) {
           data1.total[j].data.push(totaldata1[i][fields[j].label].ipv4.total)
@@ -655,7 +584,6 @@ function readData1 (data1, year) {
         }
       }
       drawChart1(data1.total, 'ipv4tbyparent')
-      drawChart2(data1.total, 'ipv4bsparent')
       var rad1 = document.getElementsByName('ipv4tby')
       for (i = 0; i < rad1.length; i++) {
         rad1[i].onclick = function () {
@@ -666,9 +594,11 @@ function readData1 (data1, year) {
       var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
+          console.log(this.getAttribute('data'))
           fullWindow(this.getAttribute('data'))
         }
       }
+      console.log(zoom)
     }
   })
   .catch(error => {
@@ -677,7 +607,7 @@ function readData1 (data1, year) {
   })
 }
 function readData2 (data2, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv6/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv6/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
   .then(response => {
     totaldata2.push(response.data)
     if (year < 2012) {
@@ -689,6 +619,7 @@ function readData2 (data2, year) {
         data2.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
         data2.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
       }
+      console.log(totaldata2)
       for (var i = 0; i < totaldata2.length; i++) {
         for (j = 0; j < fields.length; j++) {
           data2.total[j].data.push(totaldata2[i][fields[j].label].ipv6.total)
@@ -706,8 +637,7 @@ function readData2 (data2, year) {
         }
       }
       drawChart1(data2.total, 'ipv6tbyparent')
-      drawChart2(data2.total, 'ipv6bsparent')
-
+      fitHeight()
       var rad2 = document.getElementsByName('ipv6tby')
       for (i = 0; i < rad2.length; i++) {
         rad2[i].onclick = function () {
@@ -717,9 +647,11 @@ function readData2 (data2, year) {
       var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
+          console.log(this.getAttribute('data'))
           fullWindow(this.getAttribute('data'))
         }
       }
+      console.log(zoom)
     }
   })
   .catch(error => {
@@ -727,18 +659,28 @@ function readData2 (data2, year) {
     console.log(error)
   })
 }
+
 export default {
   data () {
     return {
+      generateRandomNumbers (numbers, max, min) {
+        var a = []
+        for (var i = 0; i < numbers; i++) {
+          a.push(Math.floor(Math.random() * (max - min + 1)) + max)
+        }
+        return a
+      }
     }
   },
   computed: {
+    coPilotNumbers () {
+      return this.generateRandomNumbers(12, 1000000, 10000)
+    },
+    personalNumbers () {
+      return this.generateRandomNumbers(12, 1000000, 10000)
+    },
     isMobile () {
       return (window.innerWidth <= 800 && window.innerHeight <= 600)
-    }
-  },
-  watch: {
-    '$route' (to, from) {
     }
   },
   mounted () {

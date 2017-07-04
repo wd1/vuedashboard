@@ -76,7 +76,7 @@
           <li v-for="item in $route.meta">
             {{ item.message }}
           </li>
-          <li class="active" style="color:#00aff0;"><b>{{$route.name}}</b></li>
+          <li class="active" style="color:#00aff0;"><b>{{$route.name.replace("%27","'")}}</b></li>
           <li class="active">Summary</li>
         </ol>
       </section>
