@@ -460,13 +460,6 @@ var fullwindowflag = true
 function fitHeight () {
   var maincontainer = document.getElementById('asntbycontainer')
   maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
-  var height = 800
-  document.getElementById('asntbyparent').style.height = height + 'px'
-  document.getElementById('asntbybox').style.height = height + 'px'
-  document.getElementById('ipv4tbyparent').style.height = height + 'px'
-  document.getElementById('ipv4tbybox').style.height = height + 'px'
-  document.getElementById('ipv6tbyparent').style.height = height + 'px'
-  document.getElementById('ipv6tbybox').style.height = height + 'px'
 }
 function fullWindow (id) {
   var container = document.getElementsByClassName('chart_container')
@@ -478,8 +471,8 @@ function fullWindow (id) {
     console.log(maincontainer.parentNode.parentNode.offsetHeight)
     maincontainer.style.display = 'block'
     maincontainer.className += ' fullwindow'
-    document.getElementById(id + 'parent').style.height = '100%'
-    document.getElementById(id + 'box').style.height = '100%'
+    document.getElementById(id + 'parent').style.height = '371px'
+    document.getElementById(id + 'box').style.height = '371px'
   } else {
     maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
     fitHeight()

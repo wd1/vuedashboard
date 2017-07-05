@@ -4,7 +4,7 @@
     <div id="routename" class="objecthidden">{{$route.meta[$route.meta.length-1].message}}</div>
     <div id="routename1" class="objecthidden">{{$route.name}}</div>
     <div class="col-sm-12 col-xs-12"></div>
-    <div id="asntbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="asntbycontainer" class="col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container"  style="">
       <div id="asntbybox" class="box" style="border-radius: 10px;
     border: 1px solid black;    min-height: 300px;height: 371px;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div id="asnbscontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="asnbscontainer" class="col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container"  style="">
       <div id="asnbsbox" class="box" style="border-radius: 10px;
     border: 1px solid black;    min-height: 300px;height: 371px;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div id="ipv4tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="ipv4tbycontainer" class="col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container"  style="">
       <div id="ipv4tbybox" class="box" style="border-radius: 10px;
     border: 1px solid black;    min-height: 300px;height: 371px;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <div id="ipv4bscontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="ipv4bscontainer" class="col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container"  style="">
       <div id="ipv4bsbox" class="box" style="border-radius: 10px;
     border: 1px solid black;    min-height: 300px;height: 371px;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
@@ -73,7 +73,7 @@
         </div>
       </div>
     </div>
-    <div id="ipv6tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="ipv6tbycontainer" class="col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container"  style="">
       <div id="ipv6tbybox" class="box" style="border-radius: 10px;
     border: 1px solid black;    min-height: 300px;height: 371px;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
@@ -95,7 +95,7 @@
         </div>
       </div>
     </div>
-    <div id="ipv6bscontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
+    <div id="ipv6bscontainer" class="col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container"  style="">
       <div id="ipv6bsbox" class="box" style="border-radius: 10px;
     border: 1px solid black;    min-height: 300px;height: 371px;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
@@ -506,7 +506,7 @@ function fullWindow (id) {
     document.getElementById(id + 'parent').style.height = '100%'
     document.getElementById(id + 'box').style.height = '100%'
   } else {
-    maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
+    maincontainer.className = 'col-sm-6 col-xs-12 col-lg-6 col-md-6 chart_container'
     document.getElementById(id + 'parent').style.height = '371px'
     document.getElementById(id + 'box').style.height = '371px'
     for (i = 0; i < container.length; i++) {
