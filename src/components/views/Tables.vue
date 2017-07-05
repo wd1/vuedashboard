@@ -482,12 +482,6 @@ function drawChart1 (mydata, id) {
       legend: {
         position: 'bottom',
         display: false
-      },
-      tooltips: {
-        mode: 'label',
-        xPadding: 10,
-        yPadding: 10,
-        bodySpacing: 10
       }
     }
   }
@@ -551,12 +545,6 @@ function drawChart2 (data1, id) {
       legend: {
         position: 'bottom',
         display: false
-      },
-      tooltips: {
-        mode: 'label',
-        xPadding: 10,
-        yPadding: 10,
-        bodySpacing: 10
       }
     }
   }
