@@ -1,6 +1,6 @@
 <template>
   <!-- Main content -->
-  <section class="content">
+  <section class="content" style="height:800px;">
     <div id="routename" class="objecthidden">{{$route.meta[$route.meta.length-1].message}}</div>
     <div id="routename1" class="objecthidden">{{$route.name.replace("%27","'")}}</div>
     <div class="col-sm-12 col-xs-12"></div>
@@ -20,7 +20,7 @@
               <input type="radio" name="asntby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="asntbyparent" class="box-body" style="    min-height: 300px;height: 100%;">
+          <div id="asntbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -42,7 +42,7 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="    min-height: 300px;height: 100%;">
+          <div id="ipv4tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -64,7 +64,7 @@
               <input type="radio" name="ipv6tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv6tbyparent" class="box-body" style="    min-height: 300px;height: 100%;">
+          <div id="ipv6tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -393,7 +393,7 @@ var list = [
     ]
   }
 ]
-console.log(list)
+
 import Chart from 'chart.js'
 import axios from 'axios'
 
@@ -440,7 +440,7 @@ function drawChart1 (mydata, id) {
 
       },
       responsive: true,
-      maintainAspectRatio: !(window.innerWidth <= 800 && window.innerHeight <= 600),
+      maintainAspectRatio: false,
       legend: {
         position: 'bottom',
         display: false
@@ -456,11 +456,6 @@ function drawChart1 (mydata, id) {
   new Chart(ctx, config) // eslint-disable-line no-new
 }
 var fullwindowflag = true
-
-function fitHeight () {
-  var maincontainer = document.getElementById('asntbycontainer')
-  maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
-}
 function fullWindow (id) {
   var container = document.getElementsByClassName('chart_container')
   var maincontainer = document.getElementById(id + 'container')
@@ -468,14 +463,15 @@ function fullWindow (id) {
     for (var i = 0; i < container.length; i++) {
       container[i].style.display = 'none'
     }
-    console.log(maincontainer.parentNode.parentNode.offsetHeight)
     maincontainer.style.display = 'block'
     maincontainer.className += ' fullwindow'
-    document.getElementById(id + 'parent').style.height = '371px'
-    document.getElementById(id + 'box').style.height = '371px'
+    maincontainer.parentNode.style.height = '800px'
+    document.getElementById(id + 'parent').style.height = '80%'
+    document.getElementById(id + 'box').style.height = '100%'
   } else {
     maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
-    fitHeight()
+    document.getElementById(id + 'parent').style.height = '80%'
+    document.getElementById(id + 'box').style.height = '100%'
     for (i = 0; i < container.length; i++) {
       container[i].style.display = 'block'
     }
@@ -483,10 +479,10 @@ function fullWindow (id) {
   fullwindowflag = !fullwindowflag
 }
 
-function readData (data, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/asn/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
+function readData (data, year, dataname, id) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/' + id + '/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
   .then(response => {
-    totaldata.push(response.data)
+    dataname.push(response.data)
     for (var i = 0; i < list.length; i++) {
       if (list[i].id === document.getElementById('routename').innerHTML.toLowerCase()) {
         for (var x = 0; x < list[i].countries.length; x++) {
@@ -497,9 +493,8 @@ function readData (data, year) {
         }
       }
     }
-    console.log(fields)
     if (year < 2012) {
-      readData(data, year + 1)
+      readData(data, year + 1, dataname, id)
     } else {
       for (var j = 0; j < fields.length; j++) {
         data.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
@@ -507,144 +502,35 @@ function readData (data, year) {
         data.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
         data.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
       }
-      console.log(totaldata)
-      for (i = 0; i < totaldata.length; i++) {
+      for (i = 0; i < dataname.length; i++) {
         for (j = 0; j < fields.length; j++) {
-          data.total[j].data.push(totaldata[i][fields[j].label].asn.total)
+          data.total[j].data.push(dataname[i][fields[j].label][id].total)
           data.total[j].backgroundColor.push(fields[j].color)
-          data.total[j].borderColor.push('none')
-          data.twobyte[j].data.push(totaldata[i][fields[j].label].asn.twoByte)
+          data.total[j].borderColor.push('white')
+          data.twobyte[j].data.push(dataname[i][fields[j].label][id].twoByte)
           data.twobyte[j].backgroundColor.push(fields[j].color)
-          data.twobyte[j].borderColor.push('none')
-          data.fourbyte[j].data.push(totaldata[i][fields[j].label].asn.fourByte)
+          data.twobyte[j].borderColor.push('white')
+          data.fourbyte[j].data.push(dataname[i][fields[j].label][id].fourByte)
           data.fourbyte[j].backgroundColor.push(fields[j].color)
-          data.fourbyte[j].borderColor.push('none')
-          data.cumulative[j].data.push(totaldata[i][fields[j].label].asn.fourByte)
+          data.fourbyte[j].borderColor.push('white')
+          data.cumulative[j].data.push(dataname[i][fields[j].label][id].fourByte)
           data.cumulative[j].backgroundColor.push(fields[j].color)
-          data.cumulative[j].borderColor.push('none')
+          data.cumulative[j].borderColor.push('white')
         }
       }
-      drawChart1(data.total, 'asntbyparent')
-      var rad = document.getElementsByName('asntby')
+      drawChart1(data.total, id + 'tbyparent')
+      var rad = document.getElementsByName(id + 'tby')
       for (i = 0; i < rad.length; i++) {
         rad[i].onclick = function () {
-          drawChart1(data[this.value], 'asntbyparent')
+          drawChart1(data[this.value], id + 'tbyparent')
         }
       }
       var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
-          console.log(this.getAttribute('data'))
           fullWindow(this.getAttribute('data'))
         }
       }
-      console.log(zoom)
-    }
-  })
-  .catch(error => {
-    console.log('error')
-    console.log(error)
-  })
-}
-function readData1 (data1, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv4/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
-  .then(response => {
-    totaldata1.push(response.data)
-    if (year < 2012) {
-      readData1(data1, year + 1)
-    } else {
-      for (var j = 0; j < fields.length; j++) {
-        data1.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data1.twobyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data1.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data1.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-      }
-      console.log(totaldata1)
-      for (var i = 0; i < totaldata1.length; i++) {
-        for (j = 0; j < fields.length; j++) {
-          data1.total[j].data.push(totaldata1[i][fields[j].label].ipv4.total)
-          data1.total[j].backgroundColor.push(fields[j].color)
-          data1.total[j].borderColor.push('none')
-          data1.twobyte[j].data.push(totaldata1[i][fields[j].label].ipv4.twentyFourBit)
-          data1.twobyte[j].backgroundColor.push(fields[j].color)
-          data1.twobyte[j].borderColor.push('none')
-          data1.fourbyte[j].data.push(totaldata1[i][fields[j].label].ipv4.twentyFourBit)
-          data1.fourbyte[j].backgroundColor.push(fields[j].color)
-          data1.fourbyte[j].borderColor.push('none')
-          data1.cumulative[j].data.push(totaldata1[i][fields[j].label].ipv4.count)
-          data1.cumulative[j].backgroundColor.push(fields[j].color)
-          data1.cumulative[j].borderColor.push('none')
-        }
-      }
-      drawChart1(data1.total, 'ipv4tbyparent')
-      var rad1 = document.getElementsByName('ipv4tby')
-      for (i = 0; i < rad1.length; i++) {
-        rad1[i].onclick = function () {
-          drawChart1(data.total, 'ipv4tbyparent')
-        }
-      }
-
-      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
-      for (i = 0; i < zoom.length; i++) {
-        zoom[i].onclick = function () {
-          console.log(this.getAttribute('data'))
-          fullWindow(this.getAttribute('data'))
-        }
-      }
-      console.log(zoom)
-    }
-  })
-  .catch(error => {
-    console.log('error')
-    console.log(error)
-  })
-}
-function readData2 (data2, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv6/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
-  .then(response => {
-    totaldata2.push(response.data)
-    if (year < 2012) {
-      readData2(data2, year + 1)
-    } else {
-      for (var j = 0; j < fields.length; j++) {
-        data2.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data2.twobyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data2.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data2.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-      }
-      console.log(totaldata2)
-      for (var i = 0; i < totaldata2.length; i++) {
-        for (j = 0; j < fields.length; j++) {
-          data2.total[j].data.push(totaldata2[i][fields[j].label].ipv6.total)
-          data2.total[j].backgroundColor.push(fields[j].color)
-          data2.total[j].borderColor.push('none')
-          data2.twobyte[j].data.push(totaldata2[i][fields[j].label].ipv6.twentyFourBit)
-          data2.twobyte[j].backgroundColor.push(fields[j].color)
-          data2.twobyte[j].borderColor.push('none')
-          data2.fourbyte[j].data.push(totaldata2[i][fields[j].label].ipv6.twentyFourBit)
-          data2.fourbyte[j].backgroundColor.push(fields[j].color)
-          data2.fourbyte[j].borderColor.push('none')
-          data2.cumulative[j].data.push(totaldata2[i][fields[j].label].ipv6.count)
-          data2.cumulative[j].backgroundColor.push(fields[j].color)
-          data2.cumulative[j].borderColor.push('none')
-        }
-      }
-      drawChart1(data2.total, 'ipv6tbyparent')
-      fitHeight()
-      var rad2 = document.getElementsByName('ipv6tby')
-      for (i = 0; i < rad2.length; i++) {
-        rad2[i].onclick = function () {
-          drawChart1(data.total, 'ipv6tbyparent')
-        }
-      }
-      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
-      for (i = 0; i < zoom.length; i++) {
-        zoom[i].onclick = function () {
-          console.log(this.getAttribute('data'))
-          fullWindow(this.getAttribute('data'))
-        }
-      }
-      console.log(zoom)
     }
   })
   .catch(error => {
@@ -678,9 +564,9 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      readData(data, 2008)
-      readData1(data1, 2008)
-      readData2(data2, 2008)
+      readData(data, 2008, totaldata, 'asn')
+      readData(data1, 2008, totaldata1, 'ipv4')
+      readData(data2, 2008, totaldata2, 'ipv6')
     })
   }
 }

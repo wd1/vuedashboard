@@ -18,7 +18,7 @@
               <input type="radio" name="asntby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="asntbyparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div id="asntbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -32,7 +32,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='asnbs'></span>
           </div>
-          <div  id="asnbsparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div  id="asnbsparent" class="box-body" style="height: 80%;">
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div id="ipv4tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -67,7 +67,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv4bs'></span>
           </div>
-          <div  id="ipv4bsparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div  id="ipv4bsparent" class="box-body" style="height: 80%;">
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
               <input type="radio" name="ipv6tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv6tbyparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div id="ipv6tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -102,7 +102,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv6bs'></span>
           </div>
-          <div  id="ipv6bsparent" class="box-body" style="    min-height: 300px;height: 371px;">
+          <div  id="ipv6bsparent" class="box-body" style="height: 80%;">
           </div>
         </div>
       </div>
@@ -433,7 +433,6 @@ var list = [
 import Chart from 'chart.js'
 import axios from 'axios'
 
-console.log(list)
 var fields = ['EASTERN ASIA', 'SOUTH-EASTERN ASIA', 'OCEANIA', 'SOUTHERN ASIA']
 var colors = []
 var totaldata = []
@@ -486,16 +485,10 @@ function drawChart1 (mydata, id) {
 
       },
       responsive: true,
-      maintainAspectRatio: !(window.innerWidth <= 800 && window.innerHeight <= 600),
+      maintainAspectRatio: false,
       legend: {
         position: 'bottom',
         display: false
-      },
-      tooltips: {
-        mode: 'label',
-        xPadding: 10,
-        yPadding: 10,
-        bodySpacing: 10
       }
     }
   }
@@ -509,14 +502,14 @@ function fullWindow (id) {
     for (var i = 0; i < container.length; i++) {
       container[i].style.display = 'none'
     }
-    console.log(id + 'container')
     maincontainer.style.display = 'block'
     maincontainer.className += ' fullwindow'
-    document.getElementById(id + 'parent').style.height = '100%'
+    maincontainer.parentNode.style.height = '800px'
+    document.getElementById(id + 'parent').style.height = '80%'
     document.getElementById(id + 'box').style.height = '100%'
   } else {
     maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
-    document.getElementById(id + 'parent').style.height = '371px'
+    document.getElementById(id + 'parent').style.height = '80%'
     document.getElementById(id + 'box').style.height = '371px'
     for (i = 0; i < container.length; i++) {
       container[i].style.display = 'block'
@@ -549,7 +542,7 @@ function drawChart2 (data1, id) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: !(window.innerWidth <= 800 && window.innerHeight <= 600),
+      maintainAspectRatio: false,
       legend: {
         position: 'bottom',
         display: false
@@ -565,160 +558,49 @@ function drawChart2 (data1, id) {
   new Chart(ctx, config) // eslint-disable-line no-new
 }
 
-function readData (data, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/asn/assigned,allocated/' + year + '/Eastern%20Asia,South-Eastern%20Asia,Oceania,Southern%20Asia?groupBy=subregion')
+function readData (data, year, dataname, id) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/' + id + '/assigned,allocated/' + year + '/Eastern%20Asia,South-Eastern%20Asia,Oceania,Southern%20Asia?groupBy=subregion')
   .then(response => {
-    totaldata.push(response.data)
+    dataname.push(response.data)
     if (year < 2012) {
-      readData(data, year + 1)
+      readData(data, year + 1, dataname, id)
     } else {
       for (var j = 0; j < fields.length; j++) {
-        data.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
+        data.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
+        data.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
+        data.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
       }
-      console.log(totaldata)
-      for (var i = 0; i < totaldata.length; i++) {
+      for (var i = 0; i < dataname.length; i++) {
         for (j = 0; j < fields.length; j++) {
-          data.total[j].data.push(totaldata[i][fields[j]].asn.total)
+          data.total[j].data.push(dataname[i][fields[j]][id].total)
           data.total[j].backgroundColor.push(colors[j])
-          data.total[j].borderColor.push('none')
-          data.twobyte[j].data.push(totaldata[i][fields[j]].asn.twoByte)
+          data.total[j].borderColor.push('white')
+          data.twobyte[j].data.push(dataname[i][fields[j]][id].twoByte)
           data.twobyte[j].backgroundColor.push(colors[j])
-          data.twobyte[j].borderColor.push('none')
-          data.fourbyte[j].data.push(totaldata[i][fields[j]].asn.fourByte)
+          data.twobyte[j].borderColor.push('white')
+          data.fourbyte[j].data.push(dataname[i][fields[j]][id].fourByte)
           data.fourbyte[j].backgroundColor.push(colors[j])
-          data.fourbyte[j].borderColor.push('none')
-          data.cumulative[j].data.push(totaldata[i][fields[j]].asn.fourByte)
+          data.fourbyte[j].borderColor.push('white')
+          data.cumulative[j].data.push(dataname[i][fields[j]][id].fourByte)
           data.cumulative[j].backgroundColor.push(colors[j])
-          data.cumulative[j].borderColor.push('none')
+          data.cumulative[j].borderColor.push('white')
         }
       }
-      drawChart1(data.total, 'asntbyparent')
-      drawChart2(data.total, 'asnbsparent')
-      var rad = document.getElementsByName('asntby')
+      drawChart1(data.total, id + 'tbyparent')
+      drawChart2(data.total, id + 'bsparent')
+      var rad = document.getElementsByName(id + 'tby')
       for (i = 0; i < rad.length; i++) {
         rad[i].onclick = function () {
-          drawChart1(data[this.value], 'asntbyparent')
+          drawChart1(data[this.value], id + 'tbyparent')
         }
       }
       var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
-          console.log(this.getAttribute('data'))
           fullWindow(this.getAttribute('data'))
         }
       }
-      console.log(zoom)
-    }
-  })
-  .catch(error => {
-    console.log('error')
-    console.log(error)
-  })
-}
-function readData1 (data1, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv4/assigned,allocated/' + year + '/Eastern%20Asia,South-Eastern%20Asia,Oceania,Southern%20Asia?groupBy=subregion')
-  .then(response => {
-    totaldata1.push(response.data)
-    if (year < 2012) {
-      readData1(data1, year + 1)
-    } else {
-      for (var j = 0; j < fields.length; j++) {
-        data1.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data1.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data1.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data1.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-      }
-      console.log(totaldata1)
-      for (var i = 0; i < totaldata1.length; i++) {
-        for (j = 0; j < fields.length; j++) {
-          data1.total[j].data.push(totaldata1[i][fields[j]].ipv4.total)
-          data1.total[j].backgroundColor.push(colors[j])
-          data1.total[j].borderColor.push('none')
-          data1.twobyte[j].data.push(totaldata1[i][fields[j]].ipv4.twentyFourBit)
-          data1.twobyte[j].backgroundColor.push(colors[j])
-          data1.twobyte[j].borderColor.push('none')
-          data1.fourbyte[j].data.push(totaldata1[i][fields[j]].ipv4.twentyFourBit)
-          data1.fourbyte[j].backgroundColor.push(colors[j])
-          data1.fourbyte[j].borderColor.push('none')
-          data1.cumulative[j].data.push(totaldata1[i][fields[j]].ipv4.count)
-          data1.cumulative[j].backgroundColor.push(colors[j])
-          data1.cumulative[j].borderColor.push('none')
-        }
-      }
-      drawChart1(data1.total, 'ipv4tbyparent')
-      drawChart2(data1.total, 'ipv4bsparent')
-      var rad1 = document.getElementsByName('ipv4tby')
-      for (i = 0; i < rad1.length; i++) {
-        rad1[i].onclick = function () {
-          drawChart1(data.total, 'ipv4tbyparent')
-        }
-      }
-
-      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
-      for (i = 0; i < zoom.length; i++) {
-        zoom[i].onclick = function () {
-          console.log(this.getAttribute('data'))
-          fullWindow(this.getAttribute('data'))
-        }
-      }
-      console.log(zoom)
-    }
-  })
-  .catch(error => {
-    console.log('error')
-    console.log(error)
-  })
-}
-function readData2 (data2, year) {
-  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv6/assigned,allocated/' + year + '/Eastern%20Asia,South-Eastern%20Asia,Oceania,Southern%20Asia?groupBy=subregion')
-  .then(response => {
-    totaldata2.push(response.data)
-    if (year < 2012) {
-      readData2(data2, year + 1)
-    } else {
-      for (var j = 0; j < fields.length; j++) {
-        data2.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data2.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data2.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data2.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-      }
-      console.log(totaldata2)
-      for (var i = 0; i < totaldata2.length; i++) {
-        for (j = 0; j < fields.length; j++) {
-          data2.total[j].data.push(totaldata2[i][fields[j]].ipv6.total)
-          data2.total[j].backgroundColor.push(colors[j])
-          data2.total[j].borderColor.push('none')
-          data2.twobyte[j].data.push(totaldata2[i][fields[j]].ipv6.twentyFourBit)
-          data2.twobyte[j].backgroundColor.push(colors[j])
-          data2.twobyte[j].borderColor.push('none')
-          data2.fourbyte[j].data.push(totaldata2[i][fields[j]].ipv6.twentyFourBit)
-          data2.fourbyte[j].backgroundColor.push(colors[j])
-          data2.fourbyte[j].borderColor.push('none')
-          data2.cumulative[j].data.push(totaldata2[i][fields[j]].ipv6.count)
-          data2.cumulative[j].backgroundColor.push(colors[j])
-          data2.cumulative[j].borderColor.push('none')
-        }
-      }
-      drawChart1(data2.total, 'ipv6tbyparent')
-      drawChart2(data2.total, 'ipv6bsparent')
-
-      var rad2 = document.getElementsByName('ipv6tby')
-      for (i = 0; i < rad2.length; i++) {
-        rad2[i].onclick = function () {
-          drawChart1(data.total, 'ipv6tbyparent')
-        }
-      }
-      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
-      for (i = 0; i < zoom.length; i++) {
-        zoom[i].onclick = function () {
-          console.log(this.getAttribute('data'))
-          fullWindow(this.getAttribute('data'))
-        }
-      }
-      console.log(zoom)
     }
   })
   .catch(error => {
@@ -751,9 +633,9 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      readData(data, 2008)
-      readData1(data1, 2008)
-      readData2(data2, 2008)
+      readData(data, 2008, totaldata, 'asn')
+      readData(data1, 2008, totaldata1, 'ipv4')
+      readData(data2, 2008, totaldata2, 'ipv6')
     })
   }
 }
