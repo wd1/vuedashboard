@@ -1,9 +1,8 @@
 {
-  "name": "copilot",
+  "name": "APNIC",
   "version": "0.5.0",
   "description": "A fully responsive admin template based on AdminLTE with vue.js integration",
   "author": "Gil Ferreira <gfgilly@gmail.com>",
-  "repository": "https://github.com/misterGF/CoPilot",
   "license": "MIT",
   "scripts": {
     "dev": "node build/dev-server.js",

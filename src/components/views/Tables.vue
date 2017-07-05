@@ -33,7 +33,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='asnbs'></span>
           </div>
-          <div  id="asnbsparent" class="box-body" style="height: 80%;">
+          <div  id="asnbsparent" class="box-body" style="height: 80%;margin-top:5%;">
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="height: 80%;">
+          <div id="ipv4tbyparent" class="box-body" style="height: 80%">
               
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv4bs'></span>
           </div>
-          <div  id="ipv4bsparent" class="box-body" style="height: 80%;">
+          <div  id="ipv4bsparent" class="box-body" style="height: 80%;margin-top:5%;">
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv6bs'></span>
           </div>
-          <div  id="ipv6bsparent" class="box-body" style="height: 80%;">
+          <div  id="ipv6bsparent" class="box-body" style="height: 80%;margin-top:5%;">
           </div>
         </div>
       </div>
@@ -540,7 +540,7 @@ function drawChart2 (data1, id) {
     data: {
       labels: labels,
       datasets: [{
-        label: 'CoPilot',
+        label: 'APNIC',
         backgroundColor: colors,
         data: piedata
       }]

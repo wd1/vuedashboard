@@ -32,7 +32,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='asnbs'></span>
           </div>
-          <div  id="asnbsparent" class="box-body" style="height: 80%;">
+          <div  id="asnbsparent" class="box-body" style="height: 80%;margin-top:5%;">
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv4bs'></span>
           </div>
-          <div  id="ipv4bsparent" class="box-body" style="height: 80%;">
+          <div  id="ipv4bsparent" class="box-body" style="height: 80%;margin-top:5%;">
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv6bs'></span>
           </div>
-          <div  id="ipv6bsparent" class="box-body" style="height: 80%;">
+          <div  id="ipv6bsparent" class="box-body" style="height: 80%;margin-top:5%;">
           </div>
         </div>
       </div>
@@ -535,7 +535,7 @@ function drawChart2 (data1, id) {
     data: {
       labels: fields,
       datasets: [{
-        label: 'CoPilot',
+        label: 'APNIC',
         backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9', '#c45850'],
         data: piedata
       }]
@@ -621,15 +621,6 @@ export default {
     }
   },
   computed: {
-    coPilotNumbers () {
-      return this.generateRandomNumbers(12, 1000000, 10000)
-    },
-    personalNumbers () {
-      return this.generateRandomNumbers(12, 1000000, 10000)
-    },
-    isMobile () {
-      return (window.innerWidth <= 800 && window.innerHeight <= 600)
-    }
   },
   mounted () {
     this.$nextTick(() => {

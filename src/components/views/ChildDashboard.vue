@@ -1,6 +1,6 @@
 <template>
   <!-- Main content -->
-  <section class="content" style="height:800px;">
+  <section class="content" style="">
     <div id="routename" class="objecthidden">{{$route.meta[$route.meta.length-1].message}}</div>
     <div id="routename1" class="objecthidden">{{$route.name.replace("%27","'")}}</div>
     <div class="col-sm-12 col-xs-12"></div>
@@ -20,7 +20,7 @@
               <input type="radio" name="asntby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="asntbyparent" class="box-body" style="height: 80%;">
+          <div id="asntbyparent" class="box-body" style="height: 80%;margin-top:5%;">
               
           </div>
         </div>
@@ -42,7 +42,7 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="height: 80%;">
+          <div id="ipv4tbyparent" class="box-body" style="height: 80%;margin-top:5%;">
               
           </div>
         </div>
@@ -64,7 +64,7 @@
               <input type="radio" name="ipv6tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv6tbyparent" class="box-body" style="height: 80%;">
+          <div id="ipv6tbyparent" class="box-body" style="height: 80%;margin-top:5%;">
               
           </div>
         </div>
@@ -393,7 +393,6 @@ var list = [
     ]
   }
 ]
-
 import Chart from 'chart.js'
 import axios from 'axios'
 
@@ -444,12 +443,6 @@ function drawChart1 (mydata, id) {
       legend: {
         position: 'bottom',
         display: false
-      },
-      tooltips: {
-        mode: 'label',
-        xPadding: 10,
-        yPadding: 10,
-        bodySpacing: 10
       }
     }
   }
@@ -465,7 +458,7 @@ function fullWindow (id) {
     }
     maincontainer.style.display = 'block'
     maincontainer.className += ' fullwindow'
-    maincontainer.parentNode.style.height = '800px'
+    maincontainer.parentNode.style.height = window.innerHeight * 0.8 + 'px'
     document.getElementById(id + 'parent').style.height = '80%'
     document.getElementById(id + 'box').style.height = '100%'
   } else {
@@ -538,7 +531,6 @@ function readData (data, year, dataname, id) {
     console.log(error)
   })
 }
-
 export default {
   data () {
     return {
@@ -552,18 +544,10 @@ export default {
     }
   },
   computed: {
-    coPilotNumbers () {
-      return this.generateRandomNumbers(12, 1000000, 10000)
-    },
-    personalNumbers () {
-      return this.generateRandomNumbers(12, 1000000, 10000)
-    },
-    isMobile () {
-      return (window.innerWidth <= 800 && window.innerHeight <= 600)
-    }
   },
   mounted () {
     this.$nextTick(() => {
+      this.$el.style.height = window.innerHeight * 0.8 + 'px'
       readData(data, 2008, totaldata, 'asn')
       readData(data1, 2008, totaldata1, 'ipv4')
       readData(data2, 2008, totaldata2, 'ipv6')
