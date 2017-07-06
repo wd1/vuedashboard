@@ -20,7 +20,7 @@
               <input type="radio" name="asntby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="asntbyparent" class="box-body" style="height: 80%;margin-top:5%;">
+          <div id="asntbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -42,7 +42,7 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="height: 80%;margin-top:5%;">
+          <div id="ipv4tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -64,7 +64,7 @@
               <input type="radio" name="ipv6tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv6tbyparent" class="box-body" style="height: 80%;margin-top:5%;">
+          <div id="ipv6tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -393,6 +393,7 @@ var list = [
     ]
   }
 ]
+
 import Chart from 'chart.js'
 import axios from 'axios'
 
@@ -443,6 +444,12 @@ function drawChart1 (mydata, id) {
       legend: {
         position: 'bottom',
         display: false
+      },
+      tooltips: {
+        mode: 'label',
+        xPadding: 10,
+        yPadding: 10,
+        bodySpacing: 10
       }
     }
   }
@@ -531,6 +538,7 @@ function readData (data, year, dataname, id) {
     console.log(error)
   })
 }
+
 export default {
   data () {
     return {
@@ -547,7 +555,6 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.$el.style.height = window.innerHeight * 0.8 + 'px'
       readData(data, 2008, totaldata, 'asn')
       readData(data1, 2008, totaldata1, 'ipv4')
       readData(data2, 2008, totaldata2, 'ipv6')

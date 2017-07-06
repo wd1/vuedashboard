@@ -33,7 +33,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='asnbs'></span>
           </div>
-          <div  id="asnbsparent" class="box-body" style="height: 80%;margin-top:5%;">
+          <div  id="asnbsparent" class="box-body" style="height: 80%;">
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
               <input type="radio" name="ipv4tby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="ipv4tbyparent" class="box-body" style="height: 80%">
+          <div id="ipv4tbyparent" class="box-body" style="height: 80%;">
               
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv4bs'></span>
           </div>
-          <div  id="ipv4bsparent" class="box-body" style="height: 80%;margin-top:5%;">
+          <div  id="ipv4bsparent" class="box-body" style="height: 80%;">
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@
           <div style="float:right;font-size: 12px;">
             <span class="fullview-toggle fa fa-expand" data='ipv6bs'></span>
           </div>
-          <div  id="ipv6bsparent" class="box-body" style="height: 80%;margin-top:5%;">
+          <div  id="ipv6bsparent" class="box-body" style="height: 80%;">
           </div>
         </div>
       </div>
@@ -482,6 +482,12 @@ function drawChart1 (mydata, id) {
       legend: {
         position: 'bottom',
         display: false
+      },
+      tooltips: {
+        mode: 'label',
+        xPadding: 10,
+        yPadding: 10,
+        bodySpacing: 10
       }
     }
   }
@@ -495,6 +501,7 @@ function fullWindow (id) {
     for (var i = 0; i < container.length; i++) {
       container[i].style.display = 'none'
     }
+    console.log(id + 'container')
     maincontainer.style.display = 'block'
     maincontainer.className += ' fullwindow'
     maincontainer.parentNode.style.height = '800px'
@@ -534,7 +541,7 @@ function drawChart2 (data1, id) {
     data: {
       labels: labels,
       datasets: [{
-        label: 'APNIC',
+        label: 'CoPilot',
         backgroundColor: colors,
         data: piedata
       }]
@@ -545,6 +552,12 @@ function drawChart2 (data1, id) {
       legend: {
         position: 'bottom',
         display: false
+      },
+      tooltips: {
+        mode: 'label',
+        xPadding: 10,
+        yPadding: 10,
+        bodySpacing: 10
       }
     }
   }
@@ -569,7 +582,7 @@ function readData (data, year, dataname, id) {
     }
     dataname.push(response.data)
     if (year < 2012) {
-      readData(data, year + 1, dataname, id)
+      readData(data, year + 1)
     } else {
       for (var j = 0; j < fields.length; j++) {
         data.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
@@ -599,6 +612,108 @@ function readData (data, year, dataname, id) {
       for (i = 0; i < rad.length; i++) {
         rad[i].onclick = function () {
           drawChart1(data[this.value], id + 'tbyparent')
+        }
+      }
+      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
+      for (i = 0; i < zoom.length; i++) {
+        zoom[i].onclick = function () {
+          fullWindow(this.getAttribute('data'))
+        }
+      }
+    }
+  })
+  .catch(error => {
+    console.log('error')
+    console.log(error)
+  })
+}
+function readData1 (data1, year) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv4/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
+  .then(response => {
+    totaldata1.push(response.data)
+    if (year < 2012) {
+      readData1(data1, year + 1)
+    } else {
+      for (var j = 0; j < fields.length; j++) {
+        data1.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data1.twobyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data1.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data1.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+      }
+      for (var i = 0; i < totaldata1.length; i++) {
+        for (j = 0; j < fields.length; j++) {
+          data1.total[j].data.push(totaldata1[i][fields[j].label].ipv4.total)
+          data1.total[j].backgroundColor.push(fields[j].color)
+          data1.total[j].borderColor.push('none')
+          data1.twobyte[j].data.push(totaldata1[i][fields[j].label].ipv4.twentyFourBit)
+          data1.twobyte[j].backgroundColor.push(fields[j].color)
+          data1.twobyte[j].borderColor.push('none')
+          data1.fourbyte[j].data.push(totaldata1[i][fields[j].label].ipv4.twentyFourBit)
+          data1.fourbyte[j].backgroundColor.push(fields[j].color)
+          data1.fourbyte[j].borderColor.push('none')
+          data1.cumulative[j].data.push(totaldata1[i][fields[j].label].ipv4.count)
+          data1.cumulative[j].backgroundColor.push(fields[j].color)
+          data1.cumulative[j].borderColor.push('none')
+        }
+      }
+      drawChart1(data1.total, 'ipv4tbyparent')
+      drawChart2(data1.total, 'ipv4bsparent')
+      var rad1 = document.getElementsByName('ipv4tby')
+      for (i = 0; i < rad1.length; i++) {
+        rad1[i].onclick = function () {
+          drawChart1(data.total, 'ipv4tbyparent')
+        }
+      }
+
+      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
+      for (i = 0; i < zoom.length; i++) {
+        zoom[i].onclick = function () {
+          fullWindow(this.getAttribute('data'))
+        }
+      }
+    }
+  })
+  .catch(error => {
+    console.log('error')
+    console.log(error)
+  })
+}
+function readData2 (data2, year) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/ipv6/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
+  .then(response => {
+    totaldata2.push(response.data)
+    if (year < 2012) {
+      readData2(data2, year + 1)
+    } else {
+      for (var j = 0; j < fields.length; j++) {
+        data2.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data2.twobyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data2.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data2.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+      }
+      for (var i = 0; i < totaldata2.length; i++) {
+        for (j = 0; j < fields.length; j++) {
+          data2.total[j].data.push(totaldata2[i][fields[j].label].ipv6.total)
+          data2.total[j].backgroundColor.push(fields[j].color)
+          data2.total[j].borderColor.push('none')
+          data2.twobyte[j].data.push(totaldata2[i][fields[j].label].ipv6.twentyFourBit)
+          data2.twobyte[j].backgroundColor.push(fields[j].color)
+          data2.twobyte[j].borderColor.push('none')
+          data2.fourbyte[j].data.push(totaldata2[i][fields[j].label].ipv6.twentyFourBit)
+          data2.fourbyte[j].backgroundColor.push(fields[j].color)
+          data2.fourbyte[j].borderColor.push('none')
+          data2.cumulative[j].data.push(totaldata2[i][fields[j].label].ipv6.count)
+          data2.cumulative[j].backgroundColor.push(fields[j].color)
+          data2.cumulative[j].borderColor.push('none')
+        }
+      }
+      drawChart1(data2.total, 'ipv6tbyparent')
+      drawChart2(data2.total, 'ipv6bsparent')
+
+      var rad2 = document.getElementsByName('ipv6tby')
+      for (i = 0; i < rad2.length; i++) {
+        rad2[i].onclick = function () {
+          drawChart1(data.total, 'ipv6tbyparent')
         }
       }
       var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
