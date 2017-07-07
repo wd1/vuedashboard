@@ -10,8 +10,9 @@
     <li class="treeview" v-on:click="">
       <router-link to="/EasternAsia"><i class="fa fa-tasks"></i>
         <span class="page">Eastern Asia</span>
+        <i class="fa fa-angle-left fa-fw pull-right"></i>
         <span class="pull-right-container">
-          <i class="fa fa-angle-left fa-fw pull-right"></i>
+          
         </span>
       </router-link>
       <ul class="treeview-menu">
@@ -63,8 +64,9 @@
       <router-link to="/SouthEasternAsia">
         <i class="fa fa-tasks"></i>
         <span class="page">South-Eastern Asia</span>
+        <i class="fa fa-angle-left fa-fw pull-right"></i>
         <span class="pull-right-container">
-          <i class="fa fa-angle-left fa-fw pull-right"></i>
+          
         </span>
       </router-link>
       <ul class="treeview-menu">
@@ -139,8 +141,9 @@
       <router-link to="/Oceania">
         <i class="fa fa-tasks"></i>
         <span class="page">Oceania</span>
+        <i class="fa fa-angle-left fa-fw pull-right"></i>
         <span class="pull-right-container">
-          <i class="fa fa-angle-left fa-fw pull-right"></i>
+          
         </span>
       </router-link>
       <ul class="treeview-menu">
@@ -280,8 +283,9 @@
       <router-link to="/SouthernAsia">
         <i class="fa fa-tasks"></i>
         <span class="page">Southern Asia</span>
+        <i class="fa fa-angle-left fa-fw pull-right"></i>
         <span class="pull-right-container">
-          <i class="fa fa-angle-left fa-fw pull-right"></i>
+          
         </span>
       </router-link>
       <ul class="treeview-menu">
