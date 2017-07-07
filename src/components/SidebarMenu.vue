@@ -1,5 +1,7 @@
 <template>
   <ul class="sidebar-menu">
+    <div id="routename" ref="routename" class="objecthidden" v-if="$route.meta.length">{{$route.meta[$route.meta.length-1].message}}</div>
+    <div id="routename1" ref="routename1" class="objecthidden">{{$route.name}}</div>
     <li class="active pageLink" v-on:click="toggleMenu">
       <router-link to="/"><i class="fa fa-desktop"></i>
         <span class="page">APNIC</span>
@@ -14,44 +16,44 @@
       </router-link>
       <ul class="treeview-menu">
         <li>
-          <a href="EasternAsia/china">
-            <i class=""></i>CHINA
-          </a>
+          <router-link to="/EasternAsia/china">
+            <i class="subpage"></i>CHINA
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/hongkong">
-            <i class=""></i>HONG KONG SPECIAL <br/> ADMINISTRATIVE <br/>REGION OF CHINA
-          </a>
+          <router-link to="/EasternAsia/hongkong">
+            <i class="subpage"></i>HONG KONG SPECIAL <br/> ADMINISTRATIVE <br/>REGION OF CHINA
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/japan">
-            <i class=""></i>JAPAN
-          </a>
+          <router-link to="/EasternAsia/japan">
+            <i class="subpage"></i>JAPAN
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/dkorea">
-            <i class=""></i>DEMOCRATIC PEOPLE'S <br/>REPUBLIC OF KOREA
-          </a>
+          <router-link to="/EasternAsia/dkorea">
+            <i class="subpage"></i>DEMOCRATIC PEOPLE'S <br/>REPUBLIC OF KOREA
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/rkorea">
-            <i class=""></i>REPUBLIC OF KOREA
-          </a>
+          <router-link to="/EasternAsia/rkorea">
+            <i class="subpage"></i>REPUBLIC OF KOREA
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/mongolia">
-            <i class=""></i>MONGOLIA
-          </a>
+          <router-link to="/EasternAsia/mongolia">
+            <i class="subpage"></i>MONGOLIA
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/macao">
-            <i class=""></i>MACAO SPECIAL ADMINISTRATIVE<br/>REGION OF CHINA
-          </a>
+          <router-link to="/EasternAsia/macao">
+            <i class="subpage"></i>MACAO SPECIAL ADMINISTRATIVE<br/>REGION OF CHINA
+          </router-link>
         </li>
         <li>
-          <a href="EasternAsia/taiwan">
-            <i class=""></i>TAIWAN
-          </a>
+          <router-link to="/EasternAsia/taiwan">
+            <i class="subpage"></i>TAIWAN
+          </router-link>
         </li>
       </ul>
     </li>
@@ -67,69 +69,69 @@
       </router-link>
       <ul class="treeview-menu">
         <li>
-          <a href="SouthEasternAsia/brunei">
-            <i class=""></i>BRUNEI DARUSSALAM
-          </a>
+          <router-link to="/SouthEasternAsia/brunei">
+            <i class="subpage"></i>BRUNEI DARUSSALAM
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/cocos">
-            <i class=""></i>COCOS AND KEELING ISLANDS
-          </a>
+          <router-link to="/SouthEasternAsia/cocos">
+            <i class="subpage"></i>COCOS AND KEELING ISLANDS
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/christmas">
-            <i class=""></i>CHRISTMAS ISLAND
-          </a>
+          <router-link to="/SouthEasternAsia/christmas">
+            <i class="subpage"></i>CHRISTMAS ISLAND
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/indonesia">
-            <i class=""></i>INDONESIA
-          </a>
+          <router-link to="/SouthEasternAsia/indonesia">
+            <i class="subpage"></i>INDONESIA
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/cambodia">
-            <i class=""></i>CAMBODIA
-          </a>
+          <router-link to="/SouthEasternAsia/cambodia">
+            <i class="subpage"></i>CAMBODIA
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/lao">
-            <i class=""></i>LAO PEOPLE'S DEMOCRATIC <br/> REPUBLIC
-          </a>
+          <router-link to="/SouthEasternAsia/lao">
+            <i class="subpage"></i>LAO PEOPLE'S DEMOCRATIC <br/> REPUBLIC
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/myanmar">
-            <i class=""></i>MYANMAR
-          </a>
+          <router-link to="/SouthEasternAsia/myanmar">
+            <i class="subpage"></i>MYANMAR
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/malaysia">
-            <i class=""></i>MALAYSIA
-          </a>
+          <router-link to="/SouthEasternAsia/malaysia">
+            <i class="subpage"></i>MALAYSIA
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/philippines">
-            <i class=""></i>PHILIPPINES
-          </a>
+          <router-link to="/SouthEasternAsia/philippines">
+            <i class="subpage"></i>PHILIPPINES
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/singapore">
-            <i class=""></i>SINGAPORE
-          </a>
+          <router-link to="/SouthEasternAsia/singapore">
+            <i class="subpage"></i>SINGAPORE
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/thailand">
-            <i class=""></i>THAILAND
-          </a>
+          <router-link to="/SouthEasternAsia/thailand">
+            <i class="subpage"></i>THAILAND
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/timor">
-            <i class=""></i>TIMOR-LESTE
-          </a>
+          <router-link to="/SouthEasternAsia/timor">
+            <i class="subpage"></i>TIMOR-LESTE
+          </router-link>
         </li>
         <li>
-          <a href="SouthEasternAsia/vietnam">
-            <i class=""></i>VIETNAM
-          </a>
+          <router-link to="/SouthEasternAsia/vietnam">
+            <i class="subpage"></i>VIETNAM
+          </router-link>
         </li>
       </ul>
     </li>
@@ -143,134 +145,134 @@
       </router-link>
       <ul class="treeview-menu">
         <li>
-          <a href="Oceania/american">
-            <i class=""></i>AMERICAN SAMOA
-          </a>
+          <router-link to="/Oceania/american">
+            <i class="subpage"></i>AMERICAN SAMOA
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/australia">
-            <i class=""></i>AUSTRALIA
-          </a>
+          <router-link to="/Oceania/australia">
+            <i class="subpage"></i>AUSTRALIA
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/cook">
-            <i class=""></i>COOK ISLANDS
-          </a>
+          <router-link to="/Oceania/cook">
+            <i class="subpage"></i>COOK ISLANDS
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/fiji">
-            <i class=""></i>FIJI
-          </a>
+          <router-link to="/Oceania/fiji">
+            <i class="subpage"></i>FIJI
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/micronesia">
-            <i class=""></i>MICRONESIA <br/>(FEDERATED STATES OF)
-          </a>
+          <router-link to="/Oceania/micronesia">
+            <i class="subpage"></i>MICRONESIA <br/>(FEDERATED STATES OF)
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/guam">
-            <i class=""></i>GUAM
-          </a>
+          <router-link to="/Oceania/guam">
+            <i class="subpage"></i>GUAM
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/kiribati">
-            <i class=""></i>KIRIBATI
-          </a>
+          <router-link to="/Oceania/kiribati">
+            <i class="subpage"></i>KIRIBATI
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/marshall">
-            <i class=""></i>MARSHALL ISLANDS
-          </a>
+          <router-link to="/Oceania/marshall">
+            <i class="subpage"></i>MARSHALL ISLANDS
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/northern">
-            <i class=""></i>NORTHERN MARIANA ISLANDS
-          </a>
+          <router-link to="/Oceania/northern">
+            <i class="subpage"></i>NORTHERN MARIANA ISLANDS
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/new">
-            <i class=""></i>NEW CALEDONIA
-          </a>
+          <router-link to="/Oceania/new">
+            <i class="subpage"></i>NEW CALEDONIA
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/norfolk">
-            <i class=""></i>NORFOLK ISLAND
-          </a>
+          <router-link to="/Oceania/norfolk">
+            <i class="subpage"></i>NORFOLK ISLAND
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/nauru">
-            <i class=""></i>NAURU
-          </a>
+          <router-link to="/Oceania/nauru">
+            <i class="subpage"></i>NAURU
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/niue">
-            <i class=""></i>NIUE
-          </a>
+          <router-link to="/Oceania/niue">
+            <i class="subpage"></i>NIUE
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/zealand">
-            <i class=""></i>NEW ZEALAND
-          </a>
+          <router-link to="/Oceania/zealand">
+            <i class="subpage"></i>NEW ZEALAND
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/french">
-            <i class=""></i>FRENCH POLYNESIA
-          </a>
+          <router-link to="/Oceania/french">
+            <i class="subpage"></i>FRENCH POLYNESIA
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/papua">
-            <i class=""></i>PAPUA NEW GUINEA
-          </a>
+          <router-link to="/Oceania/papua">
+            <i class="subpage"></i>PAPUA NEW GUINEA
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/pitcairn">
-            <i class=""></i>PITCAIRN
-          </a>
+          <router-link to="/Oceania/pitcairn">
+            <i class="subpage"></i>PITCAIRN
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/palau">
-            <i class=""></i>PALAU
-          </a>
+          <router-link to="/Oceania/palau">
+            <i class="subpage"></i>PALAU
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/solomon">
-            <i class=""></i>SOLOMON ISLANDS
-          </a>
+          <router-link to="/Oceania/solomon">
+            <i class="subpage"></i>SOLOMON ISLANDS
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/territories">
-            <i class=""></i>FRENCH SOUTHERN TERRITORIES
-          </a>
+          <router-link to="/Oceania/territories">
+            <i class="subpage"></i>FRENCH SOUTHERN TERRITORIES
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/tokelau">
-            <i class=""></i>TOKELAU
-          </a>
+          <router-link to="/Oceania/tokelau">
+            <i class="subpage"></i>TOKELAU
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/tonga">
-            <i class=""></i>TONGA
-          </a>
+          <router-link to="/Oceania/tonga">
+            <i class="subpage"></i>TONGA
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/tuvalu">
-            <i class=""></i>TUVALU
-          </a>
+          <router-link to="/Oceania/tuvalu">
+            <i class="subpage"></i>TUVALU
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/vanuatu">
-            <i class=""></i>VANUATU
-          </a>
+          <router-link to="/Oceania/vanuatu">
+            <i class="subpage"></i>VANUATU
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/wallis">
-            <i class=""></i>WALLIS AND FUTUNA ISLANDS
-          </a>
+          <router-link to="/Oceania/wallis">
+            <i class="subpage"></i>WALLIS AND FUTUNA ISLANDS
+          </router-link>
         </li>
         <li>
-          <a href="Oceania/samoa">
-            <i class=""></i>SAMOA
-          </a>
+          <router-link to="/Oceania/samoa">
+            <i class="subpage"></i>SAMOA
+          </router-link>
         </li>
       </ul>
     </li>
@@ -284,49 +286,49 @@
       </router-link>
       <ul class="treeview-menu">
         <li>
-          <a href="SouthernAsia/afghanistan">
-            <i class=""></i>AFGHANISTAN
-          </a>
+          <router-link to="/SouthernAsia/afghanistan">
+            <i class="subpage"></i>AFGHANISTAN
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/bangladesh">
-            <i class=""></i>BANGLADESH
-          </a>
+          <router-link to="/SouthernAsia/bangladesh">
+            <i class="subpage"></i>BANGLADESH
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/bhutan">
-            <i class=""></i>BHUTAN
-          </a>
+          <router-link to="/SouthernAsia/bhutan">
+            <i class="subpage"></i>BHUTAN
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/india">
-            <i class=""></i>INDIA
-          </a>
+          <router-link to="/SouthernAsia/india">
+            <i class="subpage"></i>INDIA
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/british">
-            <i class=""></i>BRITISH INDIAN OCEAN TERRITORY
-          </a>
+          <router-link to="/SouthernAsia/british">
+            <i class="subpage"></i>BRITISH INDIAN OCEAN TERRITORY
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/sri">
-            <i class=""></i>SRI LANKA
-          </a>
+          <router-link to="/SouthernAsia/sri">
+            <i class="subpage"></i>SRI LANKA
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/maldives">
-            <i class=""></i>MALDIVES
-          </a>
+          <router-link to="/SouthernAsia/maldives">
+            <i class="subpage"></i>MALDIVES
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/nepal">
-            <i class=""></i>NEPAL
-          </a>
+          <router-link to="/SouthernAsia/nepal">
+            <i class="subpage"></i>NEPAL
+          </router-link>
         </li>
         <li>
-          <a href="SouthernAsia/pakistan">
-            <i class=""></i>PAKISTAN
-          </a>
+          <router-link to="/SouthernAsia/pakistan">
+            <i class="subpage"></i>PAKISTAN
+          </router-link>
         </li>
       </ul>
     </li>
@@ -364,6 +366,28 @@
   </ul>
 </template>
 <script>
+function menuActive (data, data1) {
+  var els = document.getElementsByClassName('page')
+  for (var i = 0; i < els.length; i++) {
+    if (els[i].innerText === data1) {
+      els[i].parentNode.parentNode.className += ' active'
+      els[i].parentNode.parentNode.getElementsByClassName('treeview-menu')[0].style.display = 'block'
+    }
+  }
+  els = document.getElementsByClassName('subpage')
+  for (i = 0; i < els.length; i++) {
+    var text = els[i].parentNode.innerText.replace(/(?:\r\n|\r|\n)/g, '')
+    text = text.trim().replace(/\s/g, '').substr(0, 10)
+    var text1 = data1.replace(/(\r\n|\n|\r)/gm, '')
+    text1 = text1.trim().replace(/\s/g, '').substr(0, 10)
+    if (text === text1) {
+      els[i].parentNode.parentNode.parentNode.parentNode.className += ' active'
+      els[i].parentNode.style = 'color:white;background:cadetblue;'
+      els[i].parentNode.parentNode.parentNode.style.display = 'block'
+      break
+    }
+  }
+}
 export default {
   name: 'SidebarName',
   methods: {
@@ -378,6 +402,21 @@ export default {
       // Add it to the item that was clicked
       event.toElement.parentElement.className = 'pageLink active'
     }
+  },
+  watch: {
+    '$route' (to, from) {
+      location.reload()
+      console.log('s')
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      if (this.$refs.routename) {
+        menuActive(this.$refs.routename.innerText, this.$refs.routename1.innerText)
+      } else {
+        menuActive('', this.$refs.routename1.innerText)
+      }
+    })
   }
 }
 </script>

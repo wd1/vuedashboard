@@ -18,8 +18,7 @@
               <input type="radio" name="asntby" value="cumulative" style="" > Cumulative
             </div>
           </form>
-          <div id="asntbyparent" class="box-body" style="height: 80%;">
-              
+          <div id="asntbyparent" class="box-body" style="height: 80%;">            
           </div>
         </div>
       </div>
@@ -430,14 +429,15 @@ var list = [
     ]
   }
 ]
-import Chart from 'chart.js'
 import axios from 'axios'
+import Highcharts from 'highcharts'
 
 var fields = ['EASTERN ASIA', 'SOUTH-EASTERN ASIA', 'OCEANIA', 'SOUTHERN ASIA']
 var colors = []
 var totaldata = []
 var totaldata1 = []
 var totaldata2 = []
+var itemfields = {'asn': ['total', 'twoByte', 'fourByte', 'count'], 'ipv4': ['total', 'twentyFourBit', 'twentyFourBit', 'count'], 'ipv6': ['thirtyTwoBit', 'fourtyEightBit', 'total', 'count']}
 var data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
@@ -450,49 +450,56 @@ for (var index = 0; index < fields.length; index++) {
   }
 }
 function drawChart1 (mydata, id) {
-  var canvas = document.createElement('canvas')
-  document.getElementById(id).innerHTML = ''
-  document.getElementById(id).appendChild(canvas)
-  var ctx = canvas.getContext('2d')
-  var config = {
-    type: 'bar',
-    data: {
-      labels: [2008, 2009, 2010, 2011, 2012],
-      datasets: mydata
+  Highcharts.chart(id, {
+    chart: {
+      type: 'column'
     },
-    options: {
-      scales: {
-        yAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Count(Thousands of Unique Numbers)'
-          }
-        }],
-        xAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Year'
-          }
-        }]
-
+    title: {
+      text: ''
+    },
+    xAxis: {
+      categories: [2008, 2009, 2010, 2011, 2012]
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Count(Thousands of Unique Numbers)'
       },
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        position: 'bottom',
-        display: false
+      stackLabels: {
+        enabled: false,
+        style: {
+          fontWeight: 'bold',
+          color: 'gray'
+        }
       }
-    }
-  }
-  new Chart(ctx, config) // eslint-disable-line no-new
+    },
+    legend: {
+      enabled: false,
+      align: 'right',
+      x: -30,
+      verticalAlign: 'top',
+      y: 25,
+      floating: true,
+      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+      borderColor: '#CCC',
+      borderWidth: 1,
+      shadow: false
+    },
+    tooltip: {
+      headerFormat: '<b>{point.x}</b><br/>',
+      pointFormat: '{series.name}: {point.y}'
+    },
+    plotOptions: {
+      column: {
+        stacking: 'normal',
+        dataLabels: {
+          enabled: false,
+          color: 'white'
+        }
+      }
+    },
+    series: mydata
+  })
 }
 var fullwindowflag = true
 function fullWindow (id) {
@@ -518,44 +525,38 @@ function fullWindow (id) {
   fullwindowflag = !fullwindowflag
 }
 function drawChart2 (data1, id) {
-  var canvas = document.createElement('canvas')
-  document.getElementById(id).innerHTML = ''
-  document.getElementById(id).appendChild(canvas)
-  var piedata = []
-  for (var i = 0; i < data1.length; i++) {
-    var sum = 0
-    for (var j = 0; j < data1[i].data.length; j++) {
-      sum = sum + data1[i].data[j]
-    }
-    piedata.push(sum)
-  }
-  var ctx = canvas.getContext('2d')
-  var config = {
-    type: 'pie',
-    data: {
-      labels: fields,
-      datasets: [{
-        label: 'APNIC',
-        backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9', '#c45850'],
-        data: piedata
-      }]
+  Highcharts.chart(id, {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        position: 'bottom',
-        display: false
-      },
-      tooltips: {
-        mode: 'label',
-        xPadding: 10,
-        yPadding: 10,
-        bodySpacing: 10
+    title: {
+      text: ''
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: false,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false,
+          format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          style: {
+            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+          }
+        }
       }
-    }
-  }
-  new Chart(ctx, config) // eslint-disable-line no-new
+    },
+    series: [{
+      name: 'Percent',
+      colorByPoint: true,
+      data: data1
+    }]
+  })
 }
 
 function readData (data, year, dataname, id) {
@@ -566,28 +567,31 @@ function readData (data, year, dataname, id) {
       readData(data, year + 1, dataname, id)
     } else {
       for (var j = 0; j < fields.length; j++) {
-        data.total.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
-        data.twobyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
-        data.fourbyte.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
-        data.cumulative.push({'label': fields[j], 'data': [], backgroundColor: [], borderColor: [], borderWidth: 1})
+        data.total.push({'label': fields[j], 'name': fields[j], 'data': [], color: '', borderWidth: 1})
+        data.twobyte.push({'label': fields[j], 'name': fields[j], 'data': [], color: '', borderWidth: 1})
+        data.fourbyte.push({'label': fields[j], 'name': fields[j], 'data': [], color: '', borderWidth: 1})
+        data.cumulative.push({'label': fields[j], 'name': fields[j], 'data': [], color: '', borderWidth: 1})
       }
       for (var i = 0; i < dataname.length; i++) {
         for (j = 0; j < fields.length; j++) {
-          data.total[j].data.push(dataname[i][fields[j]][id].total)
-          data.total[j].backgroundColor.push(colors[j])
-          data.total[j].borderColor.push('white')
-          data.twobyte[j].data.push(dataname[i][fields[j]][id].twoByte)
-          data.twobyte[j].backgroundColor.push(colors[j])
-          data.twobyte[j].borderColor.push('white')
-          data.fourbyte[j].data.push(dataname[i][fields[j]][id].fourByte)
-          data.fourbyte[j].backgroundColor.push(colors[j])
-          data.fourbyte[j].borderColor.push('white')
-          data.cumulative[j].data.push(dataname[i][fields[j]][id].fourByte)
-          data.cumulative[j].backgroundColor.push(colors[j])
-          data.cumulative[j].borderColor.push('white')
+          data.total[j].data.push(dataname[i][fields[j]][id][(itemfields[id][0])])
+          data.total[j].color = colors[j]
+          data.twobyte[j].data.push(dataname[i][fields[j]][id][(itemfields[id][1])])
+          data.twobyte[j].color = colors[j]
+          data.fourbyte[j].data.push(dataname[i][fields[j]][id][(itemfields[id][2])])
+          data.fourbyte[j].color = colors[j]
+          data.cumulative[j].data.push(dataname[i][fields[j]][id][(itemfields[id][3])])
+          data.cumulative[j].color = colors[j]
         }
       }
       drawChart1(data.total, id + 'tbyparent')
+      for (i = 0; i < data.total.length; i++) {
+        var sum = 0
+        for (j = 0; j < data.total[i].data.length; j++) {
+          sum += parseInt(data.total[i].data[j])
+        }
+        data.total[i]['y'] = sum
+      }
       drawChart2(data.total, id + 'bsparent')
       var rad = document.getElementsByName(id + 'tby')
       for (i = 0; i < rad.length; i++) {
@@ -609,18 +613,9 @@ function readData (data, year, dataname, id) {
   })
 }
 export default {
-  data () {
-    return {
-      generateRandomNumbers (numbers, max, min) {
-        var a = []
-        for (var i = 0; i < numbers; i++) {
-          a.push(Math.floor(Math.random() * (max - min + 1)) + max)
-        }
-        return a
-      }
-    }
-  },
   computed: {
+  },
+  methods: {
   },
   mounted () {
     this.$nextTick(() => {

@@ -80,71 +80,71 @@ var list = [
   {
     id: 'all',
     label: 'ALL',
-    color: '#ff7faa',
+    color: 'rgba(255,127,170,0.5)',
     countries: [
       {
         id: 'all',
         label: 'ALL',
-        color: '#ff7faa'
+        color: 'rgba(255,127,170,0.5)'
       }
     ]
   },
   {
     id: 'southern asia',
     label: 'SOUTHERN ASIA',
-    color: '#546ef8',
+    color: 'rgba(84,110,248,0.5)',
     countries: [
       {
         id: 'af',
         label: 'AFGHANISTAN',
-        color: '#3c8f00'
+        color: 'rgba(60,143,0,0.5)'
       },
       {
         id: 'bd',
         label: 'BANGLADESH',
-        color: '#7a2ab0'
+        color: 'rgba(122,42,176,0.5)'
       },
       {
         id: 'bt',
         label: 'BHUTAN',
-        color: '#ffac19'
+        color: 'rgba(255,172,25,0.5)'
       },
       {
         id: 'in',
         label: 'INDIA',
-        color: '#546ef8'
+        color: 'rgba(84,110,248,0.5)'
       },
       {
         id: 'io',
         label: 'BRITISH INDIAN OCEAN TERRITORY',
-        color: '#547500'
+        color: 'rgba(84,117,0,0.5)'
       },
       {
         id: 'lk',
         label: 'SRI LANKA',
-        color: '#f18aff'
+        color: 'rgba(241,138,255,0.5)'
       },
       {
         id: 'mv',
         label: 'MALDIVES',
-        color: '#00b576'
+        color: 'rgba(0,181,118,0.5)'
       },
       {
         id: 'np',
         label: 'NEPAL',
-        color: '#b00081'
+        color: 'rgba(176,0,129.0.5)'
       },
       {
         id: 'pk',
         label: 'PAKISTAN',
-        color: '#82d6b7'
+        color: 'rgba(130,214,183,0.5)'
       }
     ]
   },
   {
     id: 'oceania',
     label: 'OCEANIA',
-    color: '#82d6b7',
+    color: 'rgba(130,214,183,0.5)',
     countries: [
       {
         id: 'as',
@@ -276,7 +276,7 @@ var list = [
   {
     id: 'south-eastern asia',
     label: 'SOUTH-EASTERN ASIA',
-    color: '#bf97ff',
+    color: 'rgba(191,151,255,0.5)',
     countries: [
       {
         id: 'bn',
@@ -348,7 +348,7 @@ var list = [
   {
     id: 'eastern asia',
     label: 'EASTERN ASIA',
-    color: '#b77a9d',
+    color: 'rgba(183,122,157,0.5)',
     countries: [
       {
         id: 'cn',
@@ -393,7 +393,7 @@ var list = [
     ]
   }
 ]
-import Chart from 'chart.js'
+import Highcharts from 'highcharts'
 import axios from 'axios'
 
 var fields = []
@@ -403,50 +403,58 @@ var totaldata2 = []
 var data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+var itemfields = {'asn': ['total', 'twoByte', 'fourByte', 'count'], 'ipv4': ['total', 'twentyFourBit', 'twentyFourBit', 'count'], 'ipv6': ['thirtyTwoBit', 'fourtyEightBit', 'total', 'count']}
 function drawChart1 (mydata, id) {
-  var canvas = document.createElement('canvas')
-  document.getElementById(id).innerHTML = ''
-  document.getElementById(id).appendChild(canvas)
-  var ctx = canvas.getContext('2d')
-  var config = {
-    type: 'bar',
-    data: {
-      labels: [2008, 2009, 2010, 2011, 2012],
-      datasets: mydata
+  Highcharts.chart(id, {
+    chart: {
+      type: 'column'
     },
-    options: {
-      scales: {
-        yAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Count(Thousands of Unique Numbers)'
-          }
-        }],
-        xAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Year'
-          }
-        }]
-
+    title: {
+      text: ''
+    },
+    xAxis: {
+      categories: [2008, 2009, 2010, 2011, 2012]
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Count(Thousands of Unique Numbers)'
       },
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        position: 'bottom',
-        display: false
+      stackLabels: {
+        enabled: false,
+        style: {
+          fontWeight: 'bold',
+          color: 'gray'
+        }
       }
-    }
-  }
-  new Chart(ctx, config) // eslint-disable-line no-new
+    },
+    legend: {
+      enabled: false,
+      align: 'right',
+      x: -30,
+      verticalAlign: 'top',
+      y: 25,
+      floating: true,
+      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+      borderColor: '#CCC',
+      borderWidth: 1,
+      shadow: false
+    },
+    tooltip: {
+      headerFormat: '<b>{point.x}</b><br/>',
+      pointFormat: '{series.name}: {point.y}'
+    },
+    plotOptions: {
+      column: {
+        stacking: 'normal',
+        dataLabels: {
+          enabled: false,
+          color: 'white'
+        }
+      }
+    },
+    series: mydata
+  })
 }
 var fullwindowflag = true
 function fullWindow (id) {
@@ -490,25 +498,21 @@ function readData (data, year, dataname, id) {
       readData(data, year + 1, dataname, id)
     } else {
       for (var j = 0; j < fields.length; j++) {
-        data.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.twobyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data.total.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.twobyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.fourbyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.cumulative.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
       }
       for (i = 0; i < dataname.length; i++) {
         for (j = 0; j < fields.length; j++) {
-          data.total[j].data.push(dataname[i][fields[j].label][id].total)
-          data.total[j].backgroundColor.push(fields[j].color)
-          data.total[j].borderColor.push('white')
-          data.twobyte[j].data.push(dataname[i][fields[j].label][id].twoByte)
-          data.twobyte[j].backgroundColor.push(fields[j].color)
-          data.twobyte[j].borderColor.push('white')
-          data.fourbyte[j].data.push(dataname[i][fields[j].label][id].fourByte)
-          data.fourbyte[j].backgroundColor.push(fields[j].color)
-          data.fourbyte[j].borderColor.push('white')
-          data.cumulative[j].data.push(dataname[i][fields[j].label][id].fourByte)
-          data.cumulative[j].backgroundColor.push(fields[j].color)
-          data.cumulative[j].borderColor.push('white')
+          data.total[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][0])])
+          data.total[j].color = fields[j].color
+          data.twobyte[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][1])])
+          data.twobyte[j].color = fields[j].color
+          data.fourbyte[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][2])])
+          data.fourbyte[j].color = fields[j].color
+          data.cumulative[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][3])])
+          data.cumulative[j].color = fields[j].color
         }
       }
       drawChart1(data.total, id + 'tbyparent')

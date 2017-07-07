@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import Chart from 'chart.js'
+import Highcharts from 'highcharts'
 import axios from 'axios'
 
 var list = [
@@ -442,50 +442,58 @@ var totaldata2 = []
 var data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+var itemfields = {'asn': ['total', 'twoByte', 'fourByte', 'count'], 'ipv4': ['total', 'twentyFourBit', 'twentyFourBit', 'count'], 'ipv6': ['thirtyTwoBit', 'fourtyEightBit', 'total', 'count']}
 function drawChart1 (mydata, id) {
-  var canvas = document.createElement('canvas')
-  document.getElementById(id).innerHTML = ''
-  document.getElementById(id).appendChild(canvas)
-  var ctx = canvas.getContext('2d')
-  var config = {
-    type: 'bar',
-    data: {
-      labels: [2008, 2009, 2010, 2011, 2012],
-      datasets: mydata
+  Highcharts.chart(id, {
+    chart: {
+      type: 'column'
     },
-    options: {
-      scales: {
-        yAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Count(Thousands of Unique Numbers)'
-          }
-        }],
-        xAxes: [{
-          stacked: true,
-          ticks: {
-            beginAtZero: true
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Year'
-          }
-        }]
-
+    title: {
+      text: ''
+    },
+    xAxis: {
+      categories: [2008, 2009, 2010, 2011, 2012]
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Count(Thousands of Unique Numbers)'
       },
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        position: 'bottom',
-        display: false
+      stackLabels: {
+        enabled: false,
+        style: {
+          fontWeight: 'bold',
+          color: 'gray'
+        }
       }
-    }
-  }
-  new Chart(ctx, config) // eslint-disable-line no-new
+    },
+    legend: {
+      enabled: false,
+      align: 'right',
+      x: -30,
+      verticalAlign: 'top',
+      y: 25,
+      floating: true,
+      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+      borderColor: '#CCC',
+      borderWidth: 1,
+      shadow: false
+    },
+    tooltip: {
+      headerFormat: '<b>{point.x}</b><br/>',
+      pointFormat: '{series.name}: {point.y}'
+    },
+    plotOptions: {
+      column: {
+        stacking: 'normal',
+        dataLabels: {
+          enabled: false,
+          color: 'white'
+        }
+      }
+    },
+    series: mydata
+  })
 }
 var fullwindowflag = true
 function fullWindow (id) {
@@ -511,44 +519,38 @@ function fullWindow (id) {
   fullwindowflag = !fullwindowflag
 }
 function drawChart2 (data1, id) {
-  var canvas = document.createElement('canvas')
-  document.getElementById(id).innerHTML = ''
-  document.getElementById(id).appendChild(canvas)
-  var piedata = []
-  for (var i = 0; i < data1.length; i++) {
-    var sum = 0
-    for (var j = 0; j < data1[i].data.length; j++) {
-      sum = sum + data1[i].data[j]
-    }
-    piedata.push(sum)
-  }
-  var labels = []
-  var colors = []
-  for (i = 0; i < fields.length; i++) {
-    labels[i] = fields[i].label
-    colors[i] = fields[i].color
-  }
-  var ctx = canvas.getContext('2d')
-  var config = {
-    type: 'pie',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'APNIC',
-        backgroundColor: colors,
-        data: piedata
-      }]
+  Highcharts.chart(id, {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-        position: 'bottom',
-        display: false
+    title: {
+      text: ''
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: false,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false,
+          format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          style: {
+            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+          }
+        }
       }
-    }
-  }
-  new Chart(ctx, config) // eslint-disable-line no-new
+    },
+    series: [{
+      name: 'Percent',
+      colorByPoint: true,
+      data: data1
+    }]
+  })
 }
 function readData (data, year, dataname, id) {
   axios.get('https://apnic-api.synthmeat.com/v2/apnic/' + id + '/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
@@ -572,28 +574,31 @@ function readData (data, year, dataname, id) {
       readData(data, year + 1, dataname, id)
     } else {
       for (var j = 0; j < fields.length; j++) {
-        data.total.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.twobyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.fourbyte.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
-        data.cumulative.push({'label': fields[j].label, 'data': [], backgroundColor: [], borderColor: [], borderWidth: 2})
+        data.total.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.twobyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.fourbyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.cumulative.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
       }
       for (i = 0; i < dataname.length; i++) {
         for (j = 0; j < fields.length; j++) {
-          data.total[j].data.push(dataname[i][fields[j].label][id].total)
-          data.total[j].backgroundColor.push(fields[j].color)
-          data.total[j].borderColor.push('none')
-          data.twobyte[j].data.push(dataname[i][fields[j].label][id].twoByte)
-          data.twobyte[j].backgroundColor.push(fields[j].color)
-          data.twobyte[j].borderColor.push('none')
-          data.fourbyte[j].data.push(dataname[i][fields[j].label][id].fourByte)
-          data.fourbyte[j].backgroundColor.push(fields[j].color)
-          data.fourbyte[j].borderColor.push('none')
-          data.cumulative[j].data.push(dataname[i][fields[j].label][id].fourByte)
-          data.cumulative[j].backgroundColor.push(fields[j].color)
-          data.cumulative[j].borderColor.push('none')
+          data.total[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][0])])
+          data.total[j].color = fields[j].color
+          data.twobyte[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][1])])
+          data.twobyte[j].color = fields[j].color
+          data.fourbyte[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][2])])
+          data.fourbyte[j].color = fields[j].color
+          data.cumulative[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][3])])
+          data.cumulative[j].color = fields[j].color
         }
       }
       drawChart1(data.total, id + 'tbyparent')
+      for (i = 0; i < data.total.length; i++) {
+        var sum = 0
+        for (j = 0; j < data.total[i].data.length; j++) {
+          sum += parseInt(data.total[i].data[j])
+        }
+        data.total[i]['y'] = sum
+      }
       drawChart2(data.total, id + 'bsparent')
       var rad = document.getElementsByName(id + 'tby')
       for (i = 0; i < rad.length; i++) {
