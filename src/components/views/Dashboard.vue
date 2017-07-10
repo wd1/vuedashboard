@@ -437,6 +437,8 @@ var colors = []
 var totaldata = []
 var totaldata1 = []
 var totaldata2 = []
+var historydata = {}
+var chartsarray = {}
 var itemfields = {'asn': ['total', 'twoByte', 'fourByte', 'count'], 'ipv4': ['total', 'twentyFourBit', 'twentyFourBit', 'count'], 'ipv6': ['thirtyTwoBit', 'fourtyEightBit', 'total', 'count']}
 var data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
@@ -450,7 +452,7 @@ for (var index = 0; index < fields.length; index++) {
   }
 }
 function drawChart1 (mydata, id) {
-  Highcharts.chart(id, {
+  chartsarray[id] = Highcharts.chart(id, {
     chart: {
       type: 'column'
     },
@@ -500,6 +502,7 @@ function drawChart1 (mydata, id) {
     },
     series: mydata
   })
+  chartsarray[id].redraw()
 }
 var fullwindowflag = true
 function fullWindow (id) {
@@ -525,7 +528,7 @@ function fullWindow (id) {
   fullwindowflag = !fullwindowflag
 }
 function drawChart2 (data1, id) {
-  Highcharts.chart(id, {
+  chartsarray[id] = Highcharts.chart(id, {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -557,6 +560,7 @@ function drawChart2 (data1, id) {
       data: data1
     }]
   })
+  chartsarray[id].redraw()
 }
 
 function readData (data, year, dataname, id) {
@@ -584,6 +588,7 @@ function readData (data, year, dataname, id) {
           data.cumulative[j].color = colors[j]
         }
       }
+      historydata[id + 'tby'] = data
       drawChart1(data.total, id + 'tbyparent')
       for (i = 0; i < data.total.length; i++) {
         var sum = 0
@@ -592,6 +597,7 @@ function readData (data, year, dataname, id) {
         }
         data.total[i]['y'] = sum
       }
+      historydata[id + 'bs'] = data
       drawChart2(data.total, id + 'bsparent')
       var rad = document.getElementsByName(id + 'tby')
       for (i = 0; i < rad.length; i++) {
@@ -603,6 +609,19 @@ function readData (data, year, dataname, id) {
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
           fullWindow(this.getAttribute('data'))
+          var zoomwindowid = this.getAttribute('data')
+          var rad = document.getElementsByName(zoomwindowid)
+          var valuefields
+          for (i = 0; i < rad.length; i++) {
+            if (rad[i].checked) {
+              valuefields = rad[i].value
+            }
+          }
+          if (zoomwindowid.substr(zoomwindowid.length - 3) === 'tby') {
+            drawChart1(historydata[zoomwindowid][valuefields], zoomwindowid + 'parent')
+          } else {
+            drawChart2(historydata[zoomwindowid].total, zoomwindowid + 'parent')
+          }
         }
       }
     }

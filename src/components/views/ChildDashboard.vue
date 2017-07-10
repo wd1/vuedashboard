@@ -4,9 +4,9 @@
     <div id="routename" class="objecthidden">{{$route.meta[$route.meta.length-1].message}}</div>
     <div id="routename1" class="objecthidden">{{$route.name.replace("%27","'")}}</div>
     <div class="col-sm-12 col-xs-12"></div>
-    <div id="asntbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="height:100%;">
+    <div id="asntbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container" >
       <div id="asntbybox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 100%;">
+    border: 1px solid black;    min-height: 300px;height: 800px; margin-top: 10%;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
           <h3 class="box-title" style="font-weight: bold;" >ASN 4 Total by Year</h3>
           <div style="float:right;font-size: 12px;">
@@ -26,9 +26,9 @@
         </div>
       </div>
     </div>
-    <div id="ipv4tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="height:100%;">
+    <div id="ipv4tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
       <div id="ipv4tbybox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 100%;">
+    border: 1px solid black;    min-height: 300px;height: 800px; margin-top: 10%;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
           <h3 class="box-title" style="font-weight: bold;" >IPv4 Total by Year</h3>
           <div style="float:right;font-size: 12px;">
@@ -48,9 +48,9 @@
         </div>
       </div>
     </div>
-    <div id="ipv6tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="height:100%;">
+    <div id="ipv6tbycontainer" class="col-sm-6 col-xs-12 col-lg-4 chart_container"  style="">
       <div id="ipv6tbybox" class="box" style="border-radius: 10px;
-    border: 1px solid black;    min-height: 300px;height: 100%;">
+    border: 1px solid black;    min-height: 300px;height: 800px; margin-top: 10%;">
         <div class="box-header with-border" style="text-align: center;height: 100%;">
           <h3 class="box-title" style="font-weight: bold;" >IPv6/32 by Year</h3>
           <div style="float:right;font-size: 12px;">
@@ -400,13 +400,14 @@ var fields = []
 var totaldata = []
 var totaldata1 = []
 var totaldata2 = []
+var historydata = {}
 var data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+var chartsarray = {}
 var itemfields = {'asn': ['total', 'twoByte', 'fourByte', 'count'], 'ipv4': ['total', 'twentyFourBit', 'twentyFourBit', 'count'], 'ipv6': ['thirtyTwoBit', 'fourtyEightBit', 'total', 'count']}
 function drawChart1 (mydata, id) {
-  console.log(mydata)
-  Highcharts.chart(id, {
+  chartsarray[id] = Highcharts.chart(id, {
     chart: {
       type: 'column'
     },
@@ -456,6 +457,7 @@ function drawChart1 (mydata, id) {
     },
     series: mydata
   })
+  chartsarray[id].redraw()
 }
 var fullwindowflag = true
 function fullWindow (id) {
@@ -473,7 +475,7 @@ function fullWindow (id) {
   } else {
     maincontainer.className = 'col-sm-6 col-xs-12 col-lg-4 chart_container'
     document.getElementById(id + 'parent').style.height = '80%'
-    document.getElementById(id + 'box').style.height = '100%'
+    document.getElementById(id + 'box').style.height = '800px'
     for (i = 0; i < container.length; i++) {
       container[i].style.display = 'block'
     }
@@ -516,6 +518,7 @@ function readData (data, year, dataname, id) {
           data.cumulative[j].color = fields[j].color
         }
       }
+      historydata[id] = data
       drawChart1(data.total, id + 'tbyparent')
       var rad = document.getElementsByName(id + 'tby')
       for (i = 0; i < rad.length; i++) {
@@ -527,6 +530,14 @@ function readData (data, year, dataname, id) {
       for (i = 0; i < zoom.length; i++) {
         zoom[i].onclick = function () {
           fullWindow(this.getAttribute('data'))
+          var zoomwindowid = this.getAttribute('data')
+          var rad = document.getElementsByName(zoomwindowid)
+          zoomwindowid = zoomwindowid.substr(0, zoomwindowid.length - 3)
+          for (i = 0; i < rad.length; i++) {
+            if (rad[i].checked) {
+              drawChart1(historydata[zoomwindowid][rad[i].value], zoomwindowid + 'tbyparent')
+            }
+          }
         }
       }
     }
@@ -568,7 +579,6 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.$el.style.height = window.innerHeight * 0.8 + 'px'
       readData(data, 2008, totaldata, 'asn')
       readData(data1, 2008, totaldata1, 'ipv4')
       readData(data2, 2008, totaldata2, 'ipv6')
