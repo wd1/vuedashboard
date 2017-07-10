@@ -405,6 +405,7 @@ var data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
 var itemfields = {'asn': ['total', 'twoByte', 'fourByte', 'count'], 'ipv4': ['total', 'twentyFourBit', 'twentyFourBit', 'count'], 'ipv6': ['thirtyTwoBit', 'fourtyEightBit', 'total', 'count']}
 function drawChart1 (mydata, id) {
+  console.log(mydata)
   Highcharts.chart(id, {
     chart: {
       type: 'column'
@@ -548,6 +549,22 @@ export default {
     }
   },
   computed: {
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from) {
+        fields = []
+        totaldata = []
+        totaldata1 = []
+        totaldata2 = []
+        data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+        data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+        data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+        readData(data, 2008, totaldata, 'asn')
+        readData(data1, 2008, totaldata1, 'ipv4')
+        readData(data2, 2008, totaldata2, 'ipv6')
+      }
+    }
   },
   mounted () {
     this.$nextTick(() => {

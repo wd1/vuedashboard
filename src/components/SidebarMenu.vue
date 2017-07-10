@@ -409,7 +409,6 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      location.reload()
       console.log('s')
     }
   },

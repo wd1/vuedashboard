@@ -553,6 +553,7 @@ function drawChart2 (data1, id) {
   })
 }
 function readData (data, year, dataname, id) {
+  console.log('https://apnic-api.synthmeat.com/v2/apnic/' + id + '/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
   axios.get('https://apnic-api.synthmeat.com/v2/apnic/' + id + '/assigned,allocated/' + year + '/' + (document.getElementById('routename1').innerHTML).replace(' ', '%20'))
   .then(response => {
     for (var i = 0; i < Object.keys(response.data).length; i++) {
@@ -573,6 +574,7 @@ function readData (data, year, dataname, id) {
     if (year < 2012) {
       readData(data, year + 1, dataname, id)
     } else {
+      console.log(totaldata)
       for (var j = 0; j < fields.length; j++) {
         data.total.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
         data.twobyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
@@ -624,6 +626,9 @@ export default {
     return {
     }
   },
+  created: function () {
+    console.log('created')
+  },
   computed: {
     isMobile () {
       return (window.innerWidth <= 800 && window.innerHeight <= 600)
@@ -631,6 +636,18 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+      if (to !== from) {
+        fields = []
+        totaldata = []
+        totaldata1 = []
+        totaldata2 = []
+        data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+        data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+        data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
+        readData(data, 2008, totaldata, 'asn')
+        readData(data1, 2008, totaldata1, 'ipv4')
+        readData(data2, 2008, totaldata2, 'ipv6')
+      }
     }
   },
   mounted () {
