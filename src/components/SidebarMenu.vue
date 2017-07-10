@@ -384,11 +384,13 @@ function menuActive (data, data1) {
     text = text.trim().replace(/\s/g, '').substr(0, 10)
     var text1 = data1.replace(/(\r\n|\n|\r)/gm, '')
     text1 = text1.trim().replace(/\s/g, '').substr(0, 10)
+    els[i].parentNode.style = 'color:#8aa4af;background-color: transparent;'
     if (text === text1) {
+      console.log(els[i].parentNode)
       els[i].parentNode.parentNode.parentNode.parentNode.className += ' active'
-      els[i].parentNode.style = 'color:white;background:cadetblue;'
+      els[i].parentNode.style = 'color:white;background-color:cadetblue;'
+      console.log(els[i].parentNode)
       els[i].parentNode.parentNode.parentNode.style.display = 'block'
-      break
     }
   }
 }
@@ -398,7 +400,6 @@ export default {
     toggleMenu (event) {
       // remove active from li
       var active = document.querySelector('li.pageLink.active')
-
       if (active) {
         active.classList.remove('active')
       }
@@ -407,12 +408,28 @@ export default {
       event.toElement.parentElement.className = 'pageLink active'
     }
   },
+  computed: function () {
+    console.log('coputed')
+  },
   watch: {
     '$route' (to, from) {
+      console.log('sss')
+      if (this.$refs.routename) {
+        menuActive(this.$refs.routename.innerText, this.$refs.routename1.innerText)
+      } else {
+        menuActive('', this.$refs.routename1.innerText)
+      }
     }
   },
   mounted () {
     this.$nextTick(() => {
+      var links = document.getElementsByClassName('subpage')
+      console.log(links)
+      for (var i = 0; i < links.length; i++) {
+        links[i].parentNode.onclick = function () {
+          menuActive(document.getElementById('routename').innerText, document.getElementById('routename1').innerText)
+        }
+      }
       if (this.$refs.routename) {
         menuActive(this.$refs.routename.innerText, this.$refs.routename1.innerText)
       } else {
@@ -434,6 +451,10 @@ export default {
     animation-fill-mode: forwards;
   }
 
+  .subpageactive {
+    color:white;
+    background-color:cadetblue;
+  }
   @keyframes rotate {
     0% {
       transform: rotate(0deg);
