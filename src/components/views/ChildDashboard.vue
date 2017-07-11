@@ -562,20 +562,6 @@ export default {
   computed: {
   },
   watch: {
-    '$route' (to, from) {
-      if (to !== from) {
-        fields = []
-        totaldata = []
-        totaldata1 = []
-        totaldata2 = []
-        data = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
-        data1 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
-        data2 = {'total': [], 'twobyte': [], 'fourbyte': [], 'cumulative': []}
-        readData(data, 2008, totaldata, 'asn')
-        readData(data1, 2008, totaldata1, 'ipv4')
-        readData(data2, 2008, totaldata2, 'ipv6')
-      }
-    }
   },
   mounted () {
     this.$nextTick(() => {

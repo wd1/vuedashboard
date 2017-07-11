@@ -412,14 +412,6 @@ export default {
     console.log('coputed')
   },
   watch: {
-    '$route' (to, from) {
-      console.log('sss')
-      if (this.$refs.routename) {
-        menuActive(this.$refs.routename.innerText, this.$refs.routename1.innerText)
-      } else {
-        menuActive('', this.$refs.routename1.innerText)
-      }
-    }
   },
   mounted () {
     this.$nextTick(() => {
