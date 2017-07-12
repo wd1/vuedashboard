@@ -410,24 +410,6 @@ export default {
   },
   computed: function () {
     console.log('coputed')
-  },
-  watch: {
-  },
-  mounted () {
-    this.$nextTick(() => {
-      var links = document.getElementsByClassName('subpage')
-      console.log(links)
-      for (var i = 0; i < links.length; i++) {
-        links[i].parentNode.onclick = function () {
-          menuActive(document.getElementById('routename').innerText, document.getElementById('routename1').innerText)
-        }
-      }
-      if (this.$refs.routename) {
-        menuActive(this.$refs.routename.innerText, this.$refs.routename1.innerText)
-      } else {
-        menuActive('', this.$refs.routename1.innerText)
-      }
-    })
   }
 }
 </script>

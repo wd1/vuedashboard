@@ -483,24 +483,67 @@ function fullWindow (id) {
   fullwindowflag = !fullwindowflag
 }
 
-
-
-</script>
-<style>
-.fullwindow {
-  display: block;
-  width: 100%;
-  height: 100%;
+function readData (data, year, dataname, id) {
+  axios.get('https://apnic-api.synthmeat.com/v2/apnic/' + id + '/assigned,allocated/' + year + '/' + (document.getElementById('routename').innerHTML).replace(' ', '%20'))
+  .then(response => {
+    dataname.push(response.data)
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === document.getElementById('routename').innerHTML.toLowerCase()) {
+        for (var x = 0; x < list[i].countries.length; x++) {
+          if (list[i].countries[x].label === document.getElementById('routename1').innerHTML) {
+            var obj = {'label': list[i].countries[x].id, color: list[i].countries[x].color}
+            fields[0] = obj
+          }
+        }
+      }
+    }
+    if (year < 2012) {
+      readData(data, year + 1, dataname, id)
+    } else {
+      for (var j = 0; j < fields.length; j++) {
+        data.total.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.twobyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.fourbyte.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+        data.cumulative.push({'label': fields[j].label, 'name': fields[j].label, 'data': [], color: '', borderWidth: 1})
+      }
+      for (i = 0; i < dataname.length; i++) {
+        for (j = 0; j < fields.length; j++) {
+          data.total[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][0])])
+          data.total[j].color = fields[j].color
+          data.twobyte[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][1])])
+          data.twobyte[j].color = fields[j].color
+          data.fourbyte[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][2])])
+          data.fourbyte[j].color = fields[j].color
+          data.cumulative[j].data.push(dataname[i][fields[j].label][id][(itemfields[id][3])])
+          data.cumulative[j].color = fields[j].color
+        }
+      }
+      historydata[id] = data
+      drawChart1(data.total, id + 'tbyparent')
+      var rad = document.getElementsByName(id + 'tby')
+      for (i = 0; i < rad.length; i++) {
+        rad[i].onclick = function () {
+          drawChart1(data[this.value], id + 'tbyparent')
+        }
+      }
+      var zoom = document.getElementsByClassName('fullview-toggle fa fa-expand')
+      for (i = 0; i < zoom.length; i++) {
+        zoom[i].onclick = function () {
+          fullWindow(this.getAttribute('data'))
+          var zoomwindowid = this.getAttribute('data')
+          var rad = document.getElementsByName(zoomwindowid)
+          zoomwindowid = zoomwindowid.substr(0, zoomwindowid.length - 3)
+          for (i = 0; i < rad.length; i++) {
+            if (rad[i].checked) {
+              drawChart1(historydata[zoomwindowid][rad[i].value], zoomwindowid + 'tbyparent')
+            }
+          }
+        }
+      }
+    }
+  })
+  .catch(error => {
+    console.log('error')
+    console.log(error)
+  })
 }
-.info-box {
-  cursor: pointer;
-}
-.info-box-content {
-  text-align: center;
-  vertical-align: middle;
-  display: inherit;
-}
-.fullCanvas {
-  width: 100%;
-}
-</style>
